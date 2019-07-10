@@ -1,0 +1,8 @@
+LogName,Product,Location
+IISConfig,IIS,C:\Windows\System32\inetsrv\config\
+IIsLogs,IIS,C:\inetpub\logs\LogFiles
+HttpErrLog,OS,C:\Windows\System32\LogFiles\HTTPERR
+Frebs,IIS,C:\inetpub\logs\FailedReqLogFiles
+EventApp,OS,C:\Windows\System32\winevt\Logs\Application.evtx
+EventSystem,OS,C:\Windows\System32\winevt\Logs\System.evtx
+EventSecurity,OS,C:\Windows\System32\winevt\Logs\Security.evtx
