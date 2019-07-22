@@ -21,7 +21,7 @@ Function Get-IIS-Stuff {
          }
     
      }
-function PopulateLogDefinition{ 
+Function PopulateLogDefinition{ 
         Get-IIS-Stuff
 #region LogDefinition
 
@@ -191,13 +191,11 @@ $LogDef += $LogDefQuery
 
 $LogDef | Export-Csv $IISLogsDefinition -NoTypeInformation -Delimiter ","
 }
-
-
-    Function GetSiteStatus{
+Function GetSiteStatus{
     $CurrentSites = Get-Website | Select-Object id,state,name,applicationPool,enabledProtocols,physicalPath | Sort-Object -Property id
     Return $CurrentSites
     }
-    Function CatchIISzip{
+Function CatchIISzip{
     PopulateLogDefinition    
     $LOGSDefinitions = Import-Csv $IISLogsDefinition    
     $DesktopPath = [Environment]::GetFolderPath("Desktop")
@@ -228,7 +226,7 @@ $LogDef | Export-Csv $IISLogsDefinition -NoTypeInformation -Delimiter ","
     #Compress-Archive -Path $destination -DestinationPath $zipfile
     Remove-Item -Recurse $tempLocation -Force
     }
-    function PopulateForm{
+Function PopulateForm{
     Add-Type -AssemblyName PresentationFramework 
     [xml]$form = Get-Content -Path $FormLocation
     
@@ -278,7 +276,6 @@ $LogDef | Export-Csv $IISLogsDefinition -NoTypeInformation -Delimiter ","
     #$dg.ItemsSource =@($arr)
     $Win.ShowDialog() 
         }
-    
-         
-    Get-IIS-Stuff
-    PopulateForm
+       
+Get-IIS-Stuff
+PopulateForm
