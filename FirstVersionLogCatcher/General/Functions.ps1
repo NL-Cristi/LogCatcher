@@ -203,6 +203,7 @@ Function CatchIISzip{
     $zipfile = $DesktopPath +"\IIS-ConfigLogs.zip"
     If(Test-path $tempLocation) {Remove-item -Recurse $tempLocation}
     If(Test-path $zipfile) {Remove-item $zipfile -Force}
+    New-Item -Path $DesktopPath -Name "MSDT" -ItemType "directory"
         
     foreach ($LogDefinition in $LOGSDefinitions)
    
@@ -268,7 +269,7 @@ Function PopulateForm{
     $arrproc = New-Object System.Collections.ArrayList
     $pgbar2.value = "0"
     $CurrentSites = GetSiteStatus 
-    $arrproc.addrange($CurrentSites)
+    $arrproc.addrange(@($CurrentSites))
     $pdg.ItemsSource=@($arrproc)
     $pgbar2.value = "100"
     })
