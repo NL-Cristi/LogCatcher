@@ -1,53 +1,40 @@
 <Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="LogCatcher" Height="360" Width="735">
-   <Grid Height="auto" Width="auto">
-        <TabControl Name="tabControl" HorizontalAlignment="Stretch" Height="auto" Margin="10,10,10,10" VerticalAlignment="Stretch" Width="auto" Grid.IsSharedSizeScope="True">
-            <TabItem Header="AboutLogCatcher" Height="auto" Width="auto">
-                <Grid Background="#DEEFFC" Height="auto" Width="auto">
-                    <Button x:Name="MoveToCatch" Content="NEXT" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,15,15" Width="75"/>
-                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0" TextWrapping="Wrap"><Run Text="Short Info:"/><LineBreak/><Run/><LineBreak/><Run Text="LogCatcher is a small tool for automating data collection when troubleshooting IIS and hosted web applications. "/><LineBreak/><Run/><LineBreak/><Run Text="Use this tool to save time on gathering configuration, logs and Windows events entries that can help investigation by support engineers."/><LineBreak/><Run/><LineBreak/><Run Text="LogCatcher will copy relevant files in a temporary folder on Desktop, then it will create a ZIP archive out of that folder."/></TextBlock>
-                </Grid>
+  Title="LogCatcher" Height="460" Width="700" ScrollViewer.CanContentScroll="True" ScrollViewer.HorizontalScrollBarVisibility="Visible">
+    <Grid Height="auto" Width="auto" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True">
+        <TabControl Name="tabControl" HorizontalAlignment="Stretch" Height="auto" Margin="10,10,10,10" VerticalAlignment="Stretch" Width="auto" Grid.IsSharedSizeScope="True" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True">
+            <TabItem Header="CollectLogs" Height="auto" Width="auto" FontSize="20" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True">
+                <ScrollViewer>
+                    <Grid Background="#DEEFFC" Height="auto" Width="auto" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto" x:Name="WhatToDo"/>
+                            <RowDefinition Height="5" x:Name="Split1" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="5" x:Name="Split2" />
+                            <RowDefinition Height="auto" />
+                        </Grid.RowDefinitions>
+                        <TextBlock FontSize="12" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Top" TextWrapping="Wrap" Margin="10,10,0,10"><Run FontWeight="Bold" FontStyle="Italic" Text="How to use:"/><LineBreak/><Run FontWeight="Bold" Text="Filters "/><Run Text=": &#x9;&#x9;"/><Run FontWeight="Bold" Text="Logs Age "/><Run Text="= Age of logs in Days, DEFAULT = 2 Days old logs;"/><LineBreak/><Run Text="&#x9;&#x9;"/><Run FontWeight="Bold" Text="Sites IDs"/><Run Text=" = Comma Separated List of sites we want to collect logs;"/><LineBreak/><Run Text="&#x9;&#x9;DEFAULT  =  ALL SITES hosted on IIS; "/><Run FontStyle="Italic"/><LineBreak/><Run FontStyle="Italic" Text="&#x9;&#x9;To know what ID is for what site look at &quot;Site information&quot; section;"/><LineBreak/><Run/><LineBreak/><Run FontWeight="Bold" Text="Button"/><Run Text=":&#x9;&#x9; "/><Run FontWeight="Bold" Text="Generate ZIP"/><Run Text=" = Will Create Zip For Site IDs "/></TextBlock>
+                        <GridSplitter Grid.Row="1" Height="5" HorizontalAlignment="Stretch" />
+                        <TextBlock FontSize="12" Name="FiteredAgeDescription" Grid.Row="2" Text="Logs Age :" Height="25" Margin="50,15,0,12" VerticalAlignment="Top" HorizontalAlignment="Left" TextAlignment="Center"/>
+                        <TextBox x:Name="FilteredDays" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Margin="150,13,0,10" TextWrapping="Wrap" TextAlignment="Center" Text="LogAge" Width="150" FontSize="12"/>
+                        <TextBlock Name="FilteredSiteIDDescrition" Grid.Row="2" Text="Site IDs:" Height="25" Margin="55,52,0,12" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="12"/>
+                        <TextBox x:Name="FilteredSiteID" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Margin="150,48,0,0" TextWrapping="Wrap" TextAlignment="Center" Text="Comma separated" Width="150" FontSize="12"/>
+                        <Button Name="createFilteredZIP" Grid.Row="2" Content="GENERATE ZIP" HorizontalAlignment="Right" Height="30" Margin="0,28,70,0" VerticalAlignment="Top" Width="120" Background="#51c706" FontWeight="Bold" FontSize="12"/>
+                        <ProgressBar Grid.Row="2" Minimum="0" Maximum="40" Name="StatusBar" Height="30" Margin="0,89,0,0" Width="auto" Padding="0,0,0,10" VerticalAlignment="Top" FontSize="12"/>
+                        <TextBlock Name="ProgressBarText" Grid.Row="2" Height="30" Margin="0,94,0,10" HorizontalAlignment="Center" VerticalAlignment="Top" Width="auto" TextWrapping="Wrap" Text="Files Have not been collected YET" Padding="0,0,0,10" FontStyle="Italic" FontSize="12"/>
+                        <GridSplitter Grid.Row="3" Height="5" HorizontalAlignment="Stretch" />
+                        <TextBlock Name="HostedSiteInformation" Grid.Row="4" Text="Site Information" Height="25" Margin="0,10,0,0" VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="12" FontWeight="Bold"/>
+                        <DataGrid Name="sitesDataGrid" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="auto" Margin="0,40,0,20" Width="auto" FontSize="12"/>
+                    </Grid>
+                </ScrollViewer>
             </TabItem>
-            <TabItem Header="IISCatchEmAll" Height="auto" Width="auto">
-                <Grid Background="#DEEFFC" Height="auto" Width="auto">
-                    <Button Name="createZIP" Content="Generate ZIP" HorizontalAlignment="Right" Height="31" Margin="0,0,200,10" VerticalAlignment="Bottom" Width="75"/>
-                    <TextBox x:Name="maxDays" HorizontalAlignment="Left" Height="23" Margin="200,0,0,15" TextWrapping="Wrap" Text="LogAge" VerticalAlignment="Bottom" Width="75"/>
-                    <TextBlock Name="AgeDescritptino"  Text="Age Of Logs Collected" Margin="70,0,0,20" VerticalAlignment="Bottom" HorizontalAlignment="Left"></TextBlock>
-                    <ProgressBar Minimum="0" Maximum="40" x:Name="catchStatus" Height="30" Margin="15,0,15,50" VerticalAlignment="Bottom" Width="auto"/>
-                    <TextBlock Name="UpdateText" Height="30" Margin="0,0,0,45" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="auto" TextWrapping="Wrap" Text="Files Have not been collected YET"/>
-                    <TextBlock Name="DescriptionText" Margin="0,10,0,0"  VerticalAlignment="Top" HorizontalAlignment="Center" Width="auto" Height="auto" TextWrapping="Wrap">
-            <Run FontWeight="Bold" Text="The following files are being collected:"/>
-            <LineBreak/>
-            <LineBreak/>
-            <Run Text="IIS configuration: &#x9;&#x9;&#x9;C:\Windows\System32\inetsrv\config\"/>
-            <LineBreak/>
-            <Run Text="HTTP.SYS driver logs: &#x9;&#x9;C:\Windows\System32\LogFiles\HTTPERR"/>
-            <LineBreak/>
-            <Run Text="IIS Log files: &#x9;&#x9;&#x9;C:\inetpub\logs\LogFiles\W3SVC[siteID]\"/>
-            <LineBreak/>
-            <Run Text="FREBs, Failed Request Traces:            C:\inetpub\logs\FailedReqLogFiles\W3SVC"/>
-            <LineBreak/>
-            <Run/>
-            <LineBreak/>
-            <Run Text="Relevant Windows events:"/>
-            <LineBreak/>
-            <Run Text="C:\Windows\System32\winevt\Logs\Application.evtx"/>
-            <LineBreak/>
-            <Run Text="C:\Windows\System32\winevt\Logs\System.evtx"/>
-            <LineBreak/>
-            <Run Text="C:\Windows\System32\winevt\Logs\Security.evtx"/>
-                    </TextBlock>
-                </Grid>
-            </TabItem>
-            <TabItem Header="SitesStatus" Height="auto" Width="auto">
-                <Grid Background="#DEEFFC" Height="auto" Width="auto">
-                    <Button Name="GetSites" Content="GetSites" HorizontalAlignment="Right" Margin="0,15,0,0" VerticalAlignment="Top" Width="75"/>
-                    <ProgressBar Minimum="0" Maximum="40" x:Name="getSiteStatus" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="100,13,100,0" Height="25" Width="291"/>
-                    <Label Name="label6" Content="Current Sites" HorizontalAlignment="Left" Height="26" Margin="10,10,0,0" VerticalAlignment="Top" Width="135" FontWeight="Bold"/>
-                    <DataGrid Name="sitesDataGrid" HorizontalAlignment="Left" VerticalAlignment="Top" Height="auto" Margin="10,45,0,0" Width="auto"/>
-                </Grid>
+            <TabItem Header="About" Height="auto" Width="auto" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True">
+                <ScrollViewer>
+                    <Grid Background="#DEEFFC" Height="auto" Width="auto">
+                        <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,10" TextWrapping="Wrap"><Run FontWeight="Bold" Text="Tool Information"/><LineBreak/><Run FontWeight="Bold"/><LineBreak/><Run Text="LogCatcher is a small tool for automating data collection when troubleshooting IIS and hosted web applications. "/><LineBreak/><Run Text="Use this tool to save time on gathering configuration, logs and Windows events that can help troubleshooting."/><LineBreak/><Run Text="LogCatcher will copy relevant files in a temporary folder on Desktop, then it will create a ZIP archive out of that folder."/><LineBreak/><Run/><Run FontWeight="Bold"/><LineBreak/><Run FontWeight="Bold" Text="How to start tool:"/><LineBreak/><Run FontWeight="Bold"/><LineBreak/><Run FontWeight="Bold" Text="With UI: "/><Run Text=" .\LogCatcher.ps1"/><LineBreak/><Run FontWeight="Bold" Text="With CLI: "/><Run Text=".\LogCatcher.ps1"/><LineBreak/><Run FontWeight="Bold" Text="See Help: "/><Run Text="Get-Help .\LogCatcher.ps1"/><LineBreak/><Run/><LineBreak/><Run Text="To see the examples, type: &quot;get-help .\LogCatcher.ps1 -examples&quot;."/><LineBreak/><Run Text="For more information, type: &quot;get-help .\LogCatcher.ps1 -detailed&quot;."/><LineBreak/><Run Text="For technical information, type: &quot;get-help .\LogCatcher.ps1 -full&quot;."/><LineBreak/><Run FontWeight="Bold"/><LineBreak/><Run FontWeight="Bold" Text="The following files are being collected:"/><LineBreak/><Run Text="IIS configuration: &#x9;&#x9;&#x9;C:\Windows\System32\inetsrv\config\"/><LineBreak/><Run Text="HTTP.SYS driver logs: &#x9;&#x9;C:\Windows\System32\LogFiles\HTTPERR"/><LineBreak/><Run Text="IIS Log files: &#x9;&#x9;&#x9;C:\inetpub\logs\LogFiles\W3SVC[siteID]\"/><LineBreak/><Run Text="FREBs, Failed Request Traces:            C:\inetpub\logs\FailedReqLogFiles\W3SVC"/><LineBreak/><Run/><LineBreak/><Run FontWeight="Bold" Text="Relevant Windows events:"/><LineBreak/><Run Text="C:\Windows\System32\winevt\Logs\Application.evtx"/><LineBreak/><Run Text="C:\Windows\System32\winevt\Logs\System.evtx"/><LineBreak/><Run Text="C:\Windows\System32\winevt\Logs\Security.evtxs "/></TextBlock>
+                    </Grid>
+                </ScrollViewer>
             </TabItem>
         </TabControl>
     </Grid>
