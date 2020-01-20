@@ -48,13 +48,14 @@ param (
   [int32] $LogAge,
   [String] $SiteIds
 )
+$Global:scriptPath = split-path -parent $MyInvocation.MyCommand.Definition
 If (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
   # Relaunch as an elevated process:
   Start-Process powershell.exe "-File", ('"{0}"' -f $MyInvocation.MyCommand.Path) -Verb RunAs
   exit
 }
 # Now running elevated so launch the script:
-$Global:scriptPath = split-path -parent $MyInvocation.MyCommand.Definition
+
 . $scriptPath\General\Defaults.ps1
 
 switch ($Quiet) {
