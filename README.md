@@ -1,4 +1,5 @@
-<h1>LogCatcher<h1>
+__LogCatcher__
+# This is an <h1> tag
 
 
 ##The LogCatcher Tool is designed to assist in troubleshooting various IIS issues like the following:
