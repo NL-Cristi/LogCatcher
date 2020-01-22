@@ -1,4 +1,7 @@
-The LogCatcher Tool is designed to assist in troubleshooting various IIS issues like the following:
+#LogCatcher
+
+
+##The LogCatcher Tool is designed to assist in troubleshooting various IIS issues like the following:
  
 •	SSL and SSL Server certificates issues
 •	Runtime errors and exceptions, including HTTP 400 and 50x errors
@@ -21,12 +24,12 @@ If you want to filter-down the amount of data collected from your system, you ca
  
 Once you are done with the filtering you can press the "GENERATE ZIP" button and begin the log collection.  The status bar will let you know once everything is collected and packaged up into a zip file and where you can find the zip file.
  
-  ![Image of GeenGenerate](https://github.com/crnegule/LogCatcher/images/GreenGenerateZip.jpg)
+  ![Image of GeenGenerate](/images/GreenGenerateZip.jpg)
  
 File Explorer will open automatically the folder where the logs .zip file is saved.
 The tool also has an About tab where you can find more details about how you can use the tool and which files are collected from your system.
  
-  ![Image of AboutTab](https://github.com/crnegule/LogCatcher/images/ToolAbout.jpg)
+  ![Image of AboutTab](/images/ToolAbout.jpg)
  
 If you need to collect logs from multiple servers and you don't want to click through each time or if you simply like doing everything from the command line you can also run the tool from the PowerShell command-line, without any UI. You can get more information about how to do this by be running the Get-Help command. Below I have added some examples of how to run the tool from the PowerShell CLI, and what parameters you can use, 
  
