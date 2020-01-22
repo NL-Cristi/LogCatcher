@@ -1,6 +1,6 @@
  # __LogCatcher__
-  | <a class="github-button" href="https://github.com/crnegule/LogCatcher/releases/latest" data-icon="octicon-cloud-download" aria-label="Download ntkme/github-buttons on GitHub">Download Latest</a>
- | -------------
+ [How To Run First Time](https://github.com/crnegule/LogCatcher/blob/master/RunFirstTime.md) | [Download LatestZIP](https://github.com/crnegule/LogCatcher/releases/latest)
+ -------------| -------------
 
 
 
