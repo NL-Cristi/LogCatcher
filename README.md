@@ -83,3 +83,14 @@ The tool also has an About tab where you can find more details about how you can
 ### To download, visit this location: https://github.com/crnegule/LogCatcher/releases/latest
  
 ### Please open a PR for any questions, feedback or feature implementation.
+
+
+## Authors
+
+* <a class="github-button" href="https://github.com/crnegule" data-icon="octicon-cloud-download" aria-label="Download ntkme/github-buttons on GitHub">Cristian Negulescu</a> 
+* <a class="github-button" href="https://github.com/rogheorg" data-icon="octicon-cloud-download" aria-label="Download ntkme/github-buttons on GitHub">Roxana Gheorghe</a> 
+
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
