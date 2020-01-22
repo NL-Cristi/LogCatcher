@@ -1,4 +1,5 @@
-# __LogCatcher__
+# __LogCatcher__ <a class="github-button" href="https://github.com/crnegule/LogCatcher/releases/latest" data-icon="octicon-cloud-download" aria-label="Download ntkme/github-buttons on GitHub">Download Latest</a>
+
 #### The __LogCatcher__ Tool is designed to assist in troubleshooting various __IIS__ issues like the following:
  
 * SSL and SSL Server certificates issues
@@ -17,6 +18,7 @@ Our main focus is around reducing troubleshooting time and improving response ti
  
 When you first launch the tool, you will see a screen with a brief description of how to use the tool and what each of the buttons does. At the bottom you can see a list of the sites that are hosted on the server, their corresponding application pools and the content location. 
 If you want to filter-down the amount of data collected from your system, you can choose  for how many days to collect data, and for which sites to collect data by specifying the site ID. We wanted to add this feature so that we are completely transparent about  the amount of data collected from your system.
+
  ![Image of FirstScreen](/images/FirstScreen.jpg)
  
  
@@ -67,6 +69,6 @@ If you need to collect logs from multiple servers and you don't want to click th
     .\LogCatcher.ps1 -Quiet $true -LogAge 45 -SiteIds "1,2,3,4" -ZipLocation "C:\Temp"
  
  
-To download, visit this location: https://github.com/crnegule/LogCatcher/releases/latest
+### To download, visit this location: https://github.com/crnegule/LogCatcher/releases/latest
  
-Please open a PR for any questions, feedback or feature implementation.
+### Please open a PR for any questions, feedback or feature implementation.
