@@ -1,15 +1,14 @@
 # __LogCatcher__
-
-The LogCatcher Tool is designed to assist in troubleshooting various IIS issues like the following:
+#### The __LogCatcher__ Tool is designed to assist in troubleshooting various __IIS__ issues like the following:
  
-•	SSL and SSL Server certificates issues
-•	Runtime errors and exceptions, including HTTP 400 and 50x errors
-•	Handler mappings
-•	HTTP Redirection
-•	Errors in the IIS management console
-•	IIS Extensions, Tools, and Add-Ons issues
-•	FTP service issues
-•	Server farm configuration issues
+* SSL and SSL Server certificates issues
+* Runtime errors and exceptions, including HTTP 400 and 50x errors
+* 	Handler mappings
+* 	HTTP Redirection
+* 	Errors in the IIS management console
+* 	IIS Extensions, Tools, and Add-Ons issues
+* 	FTP service issues
+* 	Server farm configuration issues
  
 The tool will help you gather the right data at the right time.  The tool collects the set of logs that Microsoft Support Engineers need in order to diagnose the issues listed above. 
 This tool is developed by members of the IIS Support Team within Microsoft so it is ready to diagnose the kinds of issues we see regularly. 
