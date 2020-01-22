@@ -2,7 +2,7 @@ function CatchFilteredIISzip {
     $date = Get-Date -Format "yyyy-MM-dd-T-HH-mm-ss"
     $Time = Get-Date 
     "$Time Tool was run with for the SiteIDS: $FilteredSitesIDs with LogAge filter set at $MaxDays" | Out-File $ToolLog -Append
-    PopulateFilteredLogDefinition | Out-Null
+    PopulateFilteredLogDefinition -ErrorAction silentlycontinue -ErrorVariable +ErrorMessages | Out-Null
     $FilteredLOGSDefinitions = Import-Csv $FilteredIISLogsDefinition
     $FilteredTempLocation = $scriptPath + "\FilteredMSDT"
     If (Test-path $FilteredTempLocation) { Get-ChildItem $FilteredTempLocation | Remove-Item -Recurse -ErrorAction silentlycontinue -ErrorVariable +ErrorMessages }
@@ -20,6 +20,11 @@ foreach ($FilteredLogDefinition in $FilteredLOGSDefinitions) {
             new-item -Path $SiteTempLocation -ItemType "directory" -Name $FilteredLogDefinition.LogName -ErrorAction silentlycontinue -ErrorVariable +ErrorMessages | Out-Null
             Robocopy.exe $FilteredLogDefinition.Location $idFloder *.config /s | Out-Null
         }
+        elseif ($FilteredLogDefinition.Product -eq "FrebLogs" ){
+            $idFloder = $SiteTempLocation + "\" + $FilteredLogDefinition.LogName
+            $SiteLogs = $idFloder + "\FrebLogs"
+            Robocopy.exe $FilteredLogDefinition.Location $SiteLogs /s /maxage:$MaxDays | Out-Null
+        }
         else {
             $idFloder = $SiteTempLocation + "\" + $FilteredLogDefinition.LogName
             $SiteLogs = $idFloder + "\IISLogs"
@@ -33,8 +38,13 @@ foreach ($FilteredLogDefinition in $FilteredLOGSDefinitions) {
                 $httperr = $GeneralTempLocation+"\HttpERR"
                 Robocopy.exe $FilteredLogDefinition.Location $httperr /s | Out-Null
             }
+            elseif( $FilteredLogDefinition.LogName -eq "IISConfig" ){
+                $IISConfig = $GeneralTempLocation+"\IISConfig"
+            Robocopy.exe $FilteredLogDefinition.Location $IISConfig *.config /s | Out-Null
+        }
             else{
-            Robocopy.exe $FilteredLogDefinition.Location $GeneralTempLocation *.config /s | Out-Null
+                $NETFramework = $GeneralTempLocation+"\NETFramework"
+            Robocopy.exe $FilteredLogDefinition.Location $NETFramework *.config /s | Out-Null
         }}
         else {
             Copy-Item -Path $FilteredLogDefinition.Location -Destination $GeneralTempLocation -Recurse -Force -ErrorAction silentlycontinue -ErrorVariable +ErrorMessages
@@ -50,7 +60,7 @@ foreach ($FilteredLogDefinition in $FilteredLOGSDefinitions) {
         $stringtoADD = "*" + $id
         $ExcludeFilter += $stringtoADD
     }
-    GenerateSiteOverview | Out-Null
+    GenerateSiteOverview -ErrorAction silentlycontinue -ErrorVariable +ErrorMessages | Out-Null
     $logName = $GeneralTempLocation+"\SiteOverview.csv"
     $Global:SiteOverview | Export-csv -Path $logName -NoTypeInformation -Force -ErrorAction silentlycontinue -ErrorVariable +ErrorMessages
 
