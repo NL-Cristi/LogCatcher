@@ -1,4 +1,4 @@
-<h1>LogCatcher
+<h1>LogCatcher<h1>
 
 
 ##The LogCatcher Tool is designed to assist in troubleshooting various IIS issues like the following:
