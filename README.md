@@ -2,7 +2,7 @@
   | <a class="github-button" href="https://github.com/crnegule/LogCatcher/releases/latest" data-icon="octicon-cloud-download" aria-label="Download ntkme/github-buttons on GitHub">Download Latest</a>
  | -------------
 
-#
+
 
 #### The __LogCatcher__ Tool is designed to assist in troubleshooting various __IIS__ issues like the following:
  
