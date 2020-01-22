@@ -1,13 +1,13 @@
 The LogCatcher Tool is designed to assist in troubleshooting various IIS issues like the following:
  
-•	SSL and SSL Server certificates issues
-•	Runtime errors and exceptions, including HTTP 400 and 50x errors
-•	Handler mappings
-•	HTTP Redirection
-•	Errors in the IIS management console
-•	IIS Extensions, Tools, and Add-Ons issues
-•	FTP service issues
-•	Server farm configuration issues
+â€¢	SSL and SSL Server certificates issues
+â€¢	Runtime errors and exceptions, including HTTP 400 and 50x errors
+â€¢	Handler mappings
+â€¢	HTTP Redirection
+â€¢	Errors in the IIS management console
+â€¢	IIS Extensions, Tools, and Add-Ons issues
+â€¢	FTP service issues
+â€¢	Server farm configuration issues
  
 The tool will help you gather the right data at the right time.  The tool collects the set of logs that Microsoft Support Engineers need in order to diagnose the issues listed above. 
 This tool is developed by members of the IIS Support Team within Microsoft so it is ready to diagnose the kinds of issues we see regularly. 
@@ -16,7 +16,7 @@ Our main focus is around reducing troubleshooting time and improving response ti
  
 When you first launch the tool, you will see a screen with a brief description of how to use the tool and what each of the buttons does. At the bottom you can see a list of the sites that are hosted on the server, their corresponding application pools and the content location. 
 If you want to filter-down the amount of data collected from your system, you can choose  for how many days to collect data, and for which sites to collect data by specifying the site ID. We wanted to add this feature so that we are completely transparent about  the amount of data collected from your system.
- ![Image of FirstScreen](https://github.com/crnegule/LogCatcher/images/FirstScreen.jpg)
+ ![Image of FirstScreen](/images/FirstScreen.jpg)
  
  
 Once you are done with the filtering you can press the "GENERATE ZIP" button and begin the log collection.  The status bar will let you know once everything is collected and packaged up into a zip file and where you can find the zip file.
@@ -68,4 +68,4 @@ If you need to collect logs from multiple servers and you don't want to click th
  
 To download, visit this location: https://github.com/crnegule/LogCatcher 
  
-Please contact us at … @microsoft.com if you have any questions or feedback.
+Please contact us at â€¦ @microsoft.com if you have any questions or feedback.
