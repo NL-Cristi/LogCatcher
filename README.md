@@ -68,6 +68,6 @@ If you need to collect logs from multiple servers and you don't want to click th
     .\LogCatcher.ps1 -Quiet $true -LogAge 45 -SiteIds "1,2,3,4" -ZipLocation "C:\Temp"
  
  
-To download, visit this location: https://github.com/crnegule/LogCatcher 
+To download, visit this location: https://github.com/crnegule/LogCatcher/releases/latest
  
-Please contact us at … @microsoft.com if you have any questions or feedback.
+Please open a PR for any questions, feedback or feature implementation.
