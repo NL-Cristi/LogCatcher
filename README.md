@@ -1,6 +1,6 @@
 # __LogCatcher__
 
-##The LogCatcher Tool is designed to assist in troubleshooting various IIS issues like the following:
+The LogCatcher Tool is designed to assist in troubleshooting various IIS issues like the following:
  
 •	SSL and SSL Server certificates issues
 •	Runtime errors and exceptions, including HTTP 400 and 50x errors
