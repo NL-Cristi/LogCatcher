@@ -80,15 +80,15 @@ The tool also has an About tab where you can find more details about how you can
     .\LogCatcher.ps1 -Quiet $true -LogAge 45 -SiteIds "1,2,3,4" -ZipLocation "C:\Temp"
  
  
-### To download, visit this location: https://github.com/crnegule/LogCatcher/releases/latest
+
  
-### Please open a PR for any questions, feedback or feature implementation.
 
 
 ## Authors
 
 * <a class="github-button" href="https://github.com/crnegule" data-icon="octicon-cloud-download" aria-label="Download ntkme/github-buttons on GitHub">Cristian Negulescu</a> 
 * <a class="github-button" href="https://github.com/rogheorg" data-icon="octicon-cloud-download" aria-label="Download ntkme/github-buttons on GitHub">Roxana Gheorghe</a> 
+### Please create a PR for any question or feature requests/changes .	
 
 
 ## License
