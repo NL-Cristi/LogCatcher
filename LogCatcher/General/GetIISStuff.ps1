@@ -3,7 +3,7 @@ Function Get-IIS-Stuff {
     $Time = Get-Date
     
         Import-Module IISAdministration -ErrorAction silentlycontinue -ErrorVariable +ErrorMessages
-        Import-Module WebAdministration -ErrorAction Stop
+        Import-Module WebAdministration -ErrorAction silentlycontinue -ErrorVariable +ErrorMessages
         Foreach ($Message in $ErrorMessages) {
             $Time = Get-Date
             $ErroText = $Message.Exception.Message
