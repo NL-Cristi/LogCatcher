@@ -60,10 +60,16 @@ foreach ($FilteredLogDefinition in $FilteredLOGSDefinitions) {
         $stringtoADD = "*" + $id
         $ExcludeFilter += $stringtoADD
     }
+   $iisInfo = Get-ItemProperty HKLM:\SOFTWARE\Microsoft\InetStp\
+    IF ($iisInfo -ge 8)
+    {
     GenerateSiteOverview -ErrorAction silentlycontinue -ErrorVariable +ErrorMessages | Out-Null
     $logName = $GeneralTempLocation+"\SiteOverview.csv"
     $Global:SiteOverview | Export-csv -Path $logName -NoTypeInformation -Force -ErrorAction silentlycontinue -ErrorVariable +ErrorMessages
-
+    }
+    else {
+        "$Time Exception Message: IIS server version is lower than 8.0 so no SiteOverView generated!" | Out-File $ToolLog -Append
+    }
     Add-Type -assembly "system.io.compression.filesystem"
     [io.compression.zipfile]::CreateFromDirectory($FilteredTempLocation, $FilteredZipFile) 
     
