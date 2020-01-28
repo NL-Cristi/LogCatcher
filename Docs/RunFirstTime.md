@@ -20,7 +20,7 @@ Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Force:$true
 __6.__ Then you can run the tool with:
 
 *  For UI: `.\LogCatcher.ps1`
-*  For UI: 
+*  For CLI: 
         `.\LogCatcher.ps1 -Quiet $true -ZipLocation c:\temp -LogAge 42 -SiteIds "1,2"`
 * For Help :
         `get-help .\LogCatcher.ps1`
