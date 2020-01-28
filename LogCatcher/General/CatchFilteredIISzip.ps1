@@ -61,19 +61,32 @@ foreach ($FilteredLogDefinition in $FilteredLOGSDefinitions) {
         $ExcludeFilter += $stringtoADD
     }
    $iisInfo = Get-ItemProperty HKLM:\SOFTWARE\Microsoft\InetStp\
-    IF ($iisInfo -ge 8)
+    IF ($iisInfo.MajorVersion -ge 8)
     {
     GenerateSiteOverview -ErrorAction silentlycontinue -ErrorVariable +ErrorMessages | Out-Null
     $logName = $GeneralTempLocation+"\SiteOverview.csv"
     $Global:SiteOverview | Export-csv -Path $logName -NoTypeInformation -Force -ErrorAction silentlycontinue -ErrorVariable +ErrorMessages
-    }
-    else {
-        "$Time Exception Message: IIS server version is lower than 8.0 so no SiteOverView generated!" | Out-File $ToolLog -Append
-    }
     Add-Type -assembly "system.io.compression.filesystem"
     [io.compression.zipfile]::CreateFromDirectory($FilteredTempLocation, $FilteredZipFile) 
     
-  Remove-Item -Recurse $FilteredTempLocation -Force -ErrorAction silentlycontinue -ErrorVariable +ErrorMessages
+  Remove-Item -Recurse $FilteredTempLocation -Force -ErrorAction silentlycontinue -ErrorVariable +ErrorMessages    
+}
+    else {
+        if($Host.Version.Major -ge 3)
+        {  
+             Add-Type -assembly "system.io.compression.filesystem"
+            [io.compression.zipfile]::CreateFromDirectory($FilteredTempLocation, $FilteredZipFile) 
+          Remove-Item -Recurse $FilteredTempLocation -Force -ErrorAction silentlycontinue -ErrorVariable +ErrorMessages   
+          "$Time Exception Message: IIS server version is lower than 8.0 so no SiteOverView generated!" | Out-File $ToolLog -Append
+
+        }
+
+        else{
+        "$Time Exception Message: IIS server version is lower than 8.0 so no SiteOverView generated!" | Out-File $ToolLog -Append
+        "$Time Exception Message: Zip was not created as system.io.compression.filesystem version could not be loaded!" | Out-File $ToolLog -Append
+    }
+    }
+
     Foreach ($Message in $ErrorMessages) {
         $Time = Get-Date
         $ErroText = $Message.Exception.Message
