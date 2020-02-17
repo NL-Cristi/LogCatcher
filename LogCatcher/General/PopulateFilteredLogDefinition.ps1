@@ -369,7 +369,13 @@ function GenerateSiteOverview {
         $IISDefQuery.SmpProcessorAffinityMask=(Get-Website $siteinfo.name | Get-IISAppPool | Select-Object -ExpandProperty CPU).SmpProcessorAffinityMask.ToString()
         $IISDefQuery.SmpProcessorAffinityMask2=(Get-Website $siteinfo.name | Get-IISAppPool | Select-Object -ExpandProperty CPU).SmpProcessorAffinityMask2.ToString()
         #Recycling -> (Get-Website $siteinfo.name | Get-IISAppPool | Select-Object -ExpandProperty Recycling)
+        If ((Get-Website $siteinfo.name | Get-IISAppPool | Select-Object -ExpandProperty Recycling |Select-Object -ExpandProperty PeriodicRestart).Schedule.Time -eq $null)
+            {      
+        $IISDefQuery.RecyclingSchedule = "NotSet"
+            }      
+        else{
         $IISDefQuery.RecyclingSchedule = (Get-Website $siteinfo.name | Get-IISAppPool | Select-Object -ExpandProperty Recycling |Select-Object -ExpandProperty PeriodicRestart).Schedule.Time.ToString()
+        }  
         $IISDefQuery.RecyclingTime = (Get-Website $siteinfo.name | Get-IISAppPool | Select-Object -ExpandProperty Recycling |Select-Object -ExpandProperty PeriodicRestart).Time.ToString()
         $IISDefQuery.RecyclingMemory = (Get-Website $siteinfo.name | Get-IISAppPool | Select-Object -ExpandProperty Recycling |Select-Object -ExpandProperty PeriodicRestart).Memory.ToString()
         $IISDefQuery.RecyclingPrivateMemory = (Get-Website $siteinfo.name | Get-IISAppPool | Select-Object -ExpandProperty Recycling |Select-Object -ExpandProperty PeriodicRestart).PrivateMemory.ToString()

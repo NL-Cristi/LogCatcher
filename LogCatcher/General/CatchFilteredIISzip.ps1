@@ -67,7 +67,7 @@ function CatchFilteredIISzip {
             $logName = $GeneralTempLocation + "\SiteOverview.csv"
             $Global:SiteOverview | Export-csv -Path $logName -NoTypeInformation -Force -ErrorAction silentlycontinue -ErrorVariable +ErrorMessages
             Add-Type -assembly "system.io.compression.filesystem"
-            [io.compression.zipfile]::CreateFromDirectory($FilteredTempLocation, $FilteredZipFile) 
+            [io.compression.zipfile]::CreateFromDirectory($FilteredTempLocation, $FilteredZipFile)
     
             Remove-Item -Recurse $FilteredTempLocation -Force -ErrorAction silentlycontinue -ErrorVariable +ErrorMessages    
         }
