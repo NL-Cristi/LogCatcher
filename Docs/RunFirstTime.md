@@ -1,4 +1,4 @@
-### To to run tool first time please follow the seps below: 
+### To run tool first time please follow the steps below: 
 
 __1.__ Download the latest ZIP from  : https://github.com/crnegule/LogCatcher/releases/latest
 
