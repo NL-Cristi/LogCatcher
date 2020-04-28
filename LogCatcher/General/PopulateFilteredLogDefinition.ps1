@@ -1,5 +1,6 @@
 Function PopulateFilteredLogDefinition { 
     Get-IIS-Stuff
+
     #region LogDefinition
 
     $LogDef = @()
@@ -138,98 +139,33 @@ Function PopulateFilteredLogDefinition {
     $LogDef += $LogDefQuery
 
     #endregion
+        #region PopulateEvtx
 
-    #region GetApplication
-    #region LogDefQuery
-    $LogDefQuery = New-Object PsObject
-    $LogDefQuery | Add-Member -MemberType NoteProperty -Name ComputerName -Value ''
-    $LogDefQuery | Add-Member -MemberType NoteProperty -Name LogName -Value ''
-    $LogDefQuery | Add-Member -MemberType NoteProperty -Name Product -Value ''
-    $LogDefQuery | Add-Member -MemberType NoteProperty -Name Location -Value ''
-    $LogDefQuery | Add-Member -MemberType NoteProperty -Name TypeInfo -Value ''
-    $LogDefQuery | Add-Member -MemberType NoteProperty -Name Level -Value ''
-    #endregion
-
-
-    $LogDefQuery.ComputerName = $env:COMPUTERNAME
-    $LogDefQuery.Level = "Server"
-    $LogDefQuery.Location = "C:\Windows\System32\winevt\Logs\Application.evtx"
-    $LogDefQuery.LogName = "Application"
-    $LogDefQuery.Product = "OS"
-    $LogDefQuery.TypeInfo = "evtx"
-
-    $LogDef += $LogDefQuery
-
-    #endregion
-    #region GetSystem
-    #region LogDefQuery
-    $LogDefQuery = New-Object PsObject
-    $LogDefQuery | Add-Member -MemberType NoteProperty -Name ComputerName -Value ''
-    $LogDefQuery | Add-Member -MemberType NoteProperty -Name LogName -Value ''
-    $LogDefQuery | Add-Member -MemberType NoteProperty -Name Product -Value ''
-    $LogDefQuery | Add-Member -MemberType NoteProperty -Name Location -Value ''
-    $LogDefQuery | Add-Member -MemberType NoteProperty -Name TypeInfo -Value ''
-    $LogDefQuery | Add-Member -MemberType NoteProperty -Name Level -Value ''
-    #endregion
-
-
-    $LogDefQuery.ComputerName = $env:COMPUTERNAME
-    $LogDefQuery.Level = "Server"
-    $LogDefQuery.Location = "C:\Windows\System32\winevt\Logs\System.evtx"
-    $LogDefQuery.LogName = "System"
-    $LogDefQuery.Product = "OS"
-    $LogDefQuery.TypeInfo = "evtx"
-
-    $LogDef += $LogDefQuery
-
-    #endregion
-    #region GetSecurity
-    #region LogDefQuery
-    $LogDefQuery = New-Object PsObject
-    $LogDefQuery | Add-Member -MemberType NoteProperty -Name ComputerName -Value ''
-    $LogDefQuery | Add-Member -MemberType NoteProperty -Name LogName -Value ''
-    $LogDefQuery | Add-Member -MemberType NoteProperty -Name Product -Value ''
-    $LogDefQuery | Add-Member -MemberType NoteProperty -Name Location -Value ''
-    $LogDefQuery | Add-Member -MemberType NoteProperty -Name TypeInfo -Value ''
-    $LogDefQuery | Add-Member -MemberType NoteProperty -Name Level -Value ''
-    #endregion
-
-
-    $LogDefQuery.ComputerName = $env:COMPUTERNAME
-    $LogDefQuery.Level = "Server"
-    $LogDefQuery.Location = "C:\Windows\System32\winevt\Logs\Security.evtx"
-    $LogDefQuery.LogName = "Security"
-    $LogDefQuery.Product = "OS"
-    $LogDefQuery.TypeInfo = "evtx"
-
-    $LogDef += $LogDefQuery
-
-    #endregion
+        foreach ($iiseventLog in $IISEventLogs) 
+        {
+           #region LogDefQuery
+             $LogDefQuery = New-Object PsObject
+           $LogDefQuery | Add-Member -MemberType NoteProperty -Name ComputerName -Value ''
+           $LogDefQuery | Add-Member -MemberType NoteProperty -Name LogName -Value ''
+           $LogDefQuery | Add-Member -MemberType NoteProperty -Name Product -Value ''
+           $LogDefQuery | Add-Member -MemberType NoteProperty -Name Location -Value ''
+           $LogDefQuery | Add-Member -MemberType NoteProperty -Name TypeInfo -Value ''
+           $LogDefQuery | Add-Member -MemberType NoteProperty -Name Level -Value ''
+           #endregion
+           
+           #region PopulateLogDefQuery 
+           $LogDefQuery.ComputerName = $env:COMPUTERNAME
+           $LogDefQuery.Level = "Server"
+           $LogDefQuery.Location =  $iiseventLog.LogFilePath.ToString() -replace "%SystemRoot%", "$env:SystemRoot" 
+           $LogDefQuery.LogName = $iiseventLog.LogName.ToString()
+           $LogDefQuery.Product = "OS"
+           $LogDefQuery.TypeInfo = "evtx"
+           #endregion
+       
+           $LogDef += $LogDefQuery
+               }
+               #endregion
     
-
-
-       #region GetCapi2
-    #region LogDefQuery
-    $LogDefQuery = New-Object PsObject
-    $LogDefQuery | Add-Member -MemberType NoteProperty -Name ComputerName -Value ''
-    $LogDefQuery | Add-Member -MemberType NoteProperty -Name LogName -Value ''
-    $LogDefQuery | Add-Member -MemberType NoteProperty -Name Product -Value ''
-    $LogDefQuery | Add-Member -MemberType NoteProperty -Name Location -Value ''
-    $LogDefQuery | Add-Member -MemberType NoteProperty -Name TypeInfo -Value ''
-    $LogDefQuery | Add-Member -MemberType NoteProperty -Name Level -Value ''
-    #endregion
-
-
-    $LogDefQuery.ComputerName = $env:COMPUTERNAME
-    $LogDefQuery.Level = "Server"
-    $LogDefQuery.Location = "C:\Windows\System32\winevt\Logs\Microsoft-Windows-CAPI2%4Operational.evtx"
-    $LogDefQuery.LogName = "Security"
-    $LogDefQuery.Product = "OS"
-    $LogDefQuery.TypeInfo = "evtx"
-
-    $LogDef += $LogDefQuery
-
-    #endregion
 
     #region ToolLog
     #region LogDefQuery

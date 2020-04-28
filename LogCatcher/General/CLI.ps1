@@ -8,7 +8,10 @@ param (
 . $scriptPath\General\GetIISStuff.ps1
 . $scriptPath\General\PopulateFilteredLogDefinition.ps1
 
+
 Get-IIS-Stuff
+
+
 if ($CLILogAge -eq 0) 
 { $MaxDays = $Global:DefaultMaxDays }
 else 
