@@ -16,7 +16,22 @@
 >* 	Server farm configuration issues
  
  #
- 
+
+The tool collects logs that Microsoft Support Engineers use in order to diagnose __IIS__ issues. 
+
+
+
+
+This tool is developed by  [__members of the IIS Support Team__](https://github.com/crnegule/LogCatcher/blob/master/README.md#authors) so it is ready to collect logs for issues we regularly encounter.
+
+We would send this tool to you, generally as part of a support case, and gather data to help you diagnose your issue.  
+
+You can also download the tool on your own from our GitHub page if you want to try to diagnose the issue by yourself.
+
+Our main focus is around reducing troubleshooting time and improving response times for our customers. 
+
+
+#
   ## The tool __ONLY__ is only for centralizing all logs in one place in a __ZIP__.
   
   We recomend you to inspect the zip before sharing it with anyone.
@@ -57,20 +72,7 @@
 ```
 
  #
-The tool will help you gather the right data at the right time.  
-The tool collects logs that Microsoft Support Engineers use in order to diagnose __IIS__ issues. 
 
-
-This tool is developed by <a class="github-button" href="https://github.com/crnegule/LogCatcher/blob/master/README.md#authorsGitHub">__members of the IIS Support Team__</a>  so it is ready to collect logs for issues we regularly encounter.
-
-We would send this tool to you, generally as part of a support case, and gather data to help you diagnose your issue.  
-
-You can also download the tool on your own from our GitHub page if you want to try to diagnose the issue by yourself.
-
-Our main focus is around reducing troubleshooting time and improving response times for our customers. 
-
-
-#
 
 ## Authors
 
