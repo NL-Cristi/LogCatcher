@@ -17,7 +17,7 @@
  
  #
  
-  ## The tool __ONLY__ centrelizes the logs in one place in a __ZIP__.
+  ## The tool __ONLY__ is only for centralizing all logs in one place in a __ZIP__.
   
   We recomend you to inspect the zip before shareing it with anyone.
 
@@ -61,7 +61,7 @@ The tool will help you gather the right data at the right time.
 The tool collects logs that Microsoft Support Engineers use in order to diagnose __IIS__ issues. 
 
 
-This tool is developed by members of the <a class="github-button" href="https://github.com/crnegule/LogCatcher/blob/master/README.md#authorsGitHub">members of the __IIS Support Team__</a>  so it is ready to collect logs for issues we regularly encounter.
+This tool is developed by <a class="github-button" href="https://github.com/crnegule/LogCatcher/blob/master/README.md#authorsGitHub">__members of the IIS Support Team__</a>  so it is ready to collect logs for issues we regularly encounter.
 
 We would send this tool to you, generally as part of a support case, and gather data to help you diagnose your issue.  
 
