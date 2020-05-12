@@ -1,7 +1,7 @@
 function CatchFilteredIISzip {
     $date = Get-Date -Format "yyyy-MM-dd-T-HH-mm-ss"
     $Time = Get-Date 
-    "$Time Tool was run with for the SiteIDS: $FilteredSitesIDs with LogAge filter set at $MaxDays" | Out-File $ToolLog -Append
+    "$Time Tool was run with for the SiteIDS: $FilteredSitesIDs with LogAge filter set at $MaxDays" | Out-File $ToolLog -Append -Force
     PopulateFilteredLogDefinition -ErrorAction silentlycontinue -ErrorVariable +ErrorMessages | Out-Null
     $FilteredLOGSDefinitions = Import-Csv $FilteredIISLogsDefinition
     $FilteredTempLocation = $scriptPath + "\FilteredMSDT"
@@ -14,8 +14,12 @@ function CatchFilteredIISzip {
     foreach ($FilteredLogDefinition in $FilteredLOGSDefinitions) {
         if ($FilteredLogDefinition.Level -eq 'Site') {
             if ($FilteredLogDefinition.Product -eq "SitePath" ) {
+                $idFloder = $SiteTempLocation + "\" + $FilteredLogDefinition.LogName     
+                new-item -Path $SiteTempLocation -ItemType "directory" -Name $FilteredLogDefinition.LogName -ErrorAction silentlycontinue -ErrorVariable +ErrorMessages | Out-Null
+                Robocopy.exe $FilteredLogDefinition.Location $idFloder *.config /s | Out-Null
+            }
+            elseif ($FilteredLogDefinition.Product -eq "VappPath" ) {
                 $idFloder = $SiteTempLocation + "\" + $FilteredLogDefinition.LogName
-            
                 new-item -Path $SiteTempLocation -ItemType "directory" -Name $FilteredLogDefinition.LogName -ErrorAction silentlycontinue -ErrorVariable +ErrorMessages | Out-Null
                 Robocopy.exe $FilteredLogDefinition.Location $idFloder *.config /s | Out-Null
             }
@@ -24,6 +28,7 @@ function CatchFilteredIISzip {
                 $SiteLogs = $idFloder + "\FrebLogs"
                 Robocopy.exe $FilteredLogDefinition.Location $SiteLogs /s /maxage:$MaxDays | Out-Null
             }
+          
             else {
                 $idFloder = $SiteTempLocation + "\" + $FilteredLogDefinition.LogName
                 $SiteLogs = $idFloder + "\IISLogs"
@@ -53,6 +58,14 @@ function CatchFilteredIISzip {
         }
     }
 
+    GetOsInfo -ErrorAction silentlycontinue -ErrorVariable +ErrorMessages | Out-Null
+    $osInfoLog = $GeneralTempLocation + "\OsInfo.txt"
+    
+    $Global:OsVer | out-file -FilePath $osInfoLog -Append -Force
+    $Global:NetVersion | out-file -FilePath $osInfoLog -Append -Force
+    $Global:WinHotFix | out-file -FilePath $osInfoLog -Append -Force
+    $Global:OsFeatures | out-file -FilePath $osInfoLog -Append -Force
+
     $ExcludeFilter = @()
     $Errlog = "HTTP*"
     $ExcludeFilter += $Errlog
@@ -66,7 +79,7 @@ function CatchFilteredIISzip {
             GenerateSiteOverview -ErrorAction silentlycontinue -ErrorVariable +ErrorMessages | Out-Null
             $logName = $GeneralTempLocation + "\SiteOverview.csv"
             $Global:SiteOverview | Export-csv -Path $logName -NoTypeInformation -Force -ErrorAction silentlycontinue -ErrorVariable +ErrorMessages
-            Add-Type -assembly "system.io.compression.filesystem"
+             Add-Type -assembly "system.io.compression.filesystem"
             [io.compression.zipfile]::CreateFromDirectory($FilteredTempLocation, $FilteredZipFile)
     
             Remove-Item -Recurse $FilteredTempLocation -Force -ErrorAction silentlycontinue -ErrorVariable +ErrorMessages    

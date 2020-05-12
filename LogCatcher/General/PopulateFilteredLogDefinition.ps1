@@ -42,6 +42,28 @@ Function PopulateFilteredLogDefinition {
         $LogDef += $LogDefQuery
 
     }
+
+        $webApplications = Get-WebApplication
+    foreach ($vweb in $webApplications) {
+        #region LogDefQuery
+        $LogDefQuery = New-Object PsObject
+        $LogDefQuery | Add-Member -MemberType NoteProperty -Name ComputerName -Value ''
+        $LogDefQuery | Add-Member -MemberType NoteProperty -Name LogName -Value ''
+        $LogDefQuery | Add-Member -MemberType NoteProperty -Name Product -Value ''
+        $LogDefQuery | Add-Member -MemberType NoteProperty -Name Location -Value ''
+        $LogDefQuery | Add-Member -MemberType NoteProperty -Name TypeInfo -Value ''
+        $LogDefQuery | Add-Member -MemberType NoteProperty -Name Level -Value ''
+        #endregion
+        $LogDefQuery.ComputerName = $env:COMPUTERNAME
+        $LogDefQuery.Level = "Site"
+        $LogDefQuery.Location = $vweb.physicalPath
+        $LogDefQuery.LogName = $vweb.path.Replace("/","_")
+        $LogDefQuery.Product = "VappPath"
+        $LogDefQuery.TypeInfo = "Folder"
+
+        $LogDef += $LogDefQuery
+
+    }
     #endregion
 
     #region getSiteLogs
@@ -284,6 +306,7 @@ function GenerateSiteOverview {
         $IISDefQuery | Add-Member -MemberType NoteProperty -Name PingInterval -Value ''
         $IISDefQuery | Add-Member -MemberType NoteProperty -Name PingResponseTime -Value ''
         $IISDefQuery | Add-Member -MemberType NoteProperty -Name ShutdownTimeLimit -Value ''
+        
         #Generic
         $IISDefQuery.SiteName = $siteinfo.Name.ToString()
         $IISDefQuery.applicationPool = $siteinfo.applicationPool.ToString()
@@ -339,3 +362,54 @@ function GenerateSiteOverview {
                 $Global:SiteOverview += $IISDefQuery
        } 
 }
+
+Function GetOsInfo { 
+    $Global:NetVersion = @()
+    $Global:WinHotFix = @()
+    $Global:OsFeatures = @()
+    $Global:OsVer = New-Object PsObject
+    
+$DotNetVersion = Get-ChildItem 'HKLM:\SOFTWARE\Microsoft\NET Framework Setup\NDP' -Recurse | Get-ItemProperty -Name Version, Release -ErrorAction 0 | Where-Object { $_.PSChildName -match '^(?!S)\p{L}'} | select PSChildName, Version, Release
+foreach ($dotnet in $DotNetVersion) {
+    $dotnetver = New-Object PsObject
+    $dotnetver | Add-Member -MemberType NoteProperty -Name NDPver -Value ''
+    $dotnetver | Add-Member -MemberType NoteProperty -Name Version -Value ''
+    $dotnetver | Add-Member -MemberType NoteProperty -Name Release -Value ''
+    $dotnetver.NDPver = $dotnet.PSChildName
+    $dotnetver.Version = $dotnet.Version
+    $dotnetver.Release = $dotnet.Release
+    $Global:NetVersion += $dotnetver}
+
+$hotfix = get-hotfix
+foreach ($fix in $hotfix) {
+    $fixinfo = New-Object PsObject
+    $fixinfo | Add-Member -MemberType NoteProperty -Name Description -Value ''
+    $fixinfo | Add-Member -MemberType NoteProperty -Name InstalledOn -Value ''
+    $fixinfo | Add-Member -MemberType NoteProperty -Name HotFixID -Value ''
+    $fixinfo.Description = $fix.Description
+    $fixinfo.InstalledOn = $fix.InstalledOn
+    $fixinfo.HotFixID = $fix.HotFixID
+    $Global:WinHotFix += $fixinfo    }
+
+$WindowsFeatures = Get-WindowsFeature| Where Installed
+foreach ($feature in $WindowsFeatures) {
+    $fetureInfo = New-Object PsObject
+    $fetureInfo | Add-Member -MemberType NoteProperty -Name Name -Value ''
+    $fetureInfo | Add-Member -MemberType NoteProperty -Name FeatureType -Value ''
+    $fetureInfo | Add-Member -MemberType NoteProperty -Name Depth -Value ''
+    $fetureInfo.Name = $feature.Name
+    $fetureInfo.FeatureType = $feature.FeatureType
+    $fetureInfo.Depth = $feature.Depth
+    $Global:OsFeatures += $fetureInfo}
+
+    $OsVer | Add-Member -MemberType NoteProperty -Name ComputerName -Value ''
+    $OsVer | Add-Member -MemberType NoteProperty -Name OsVersion -Value ''
+    $OsVer | Add-Member -MemberType NoteProperty -Name Edition -Value ''
+    $OsVer.ComputerName = $Env:COMPUTERNAME
+    $OsVer.OsVersion = ([System.Environment]::OSVersion.Version).ToString()
+    $OsVer.Edition = (Get-WindowsEdition -Online).Edition
+}
+
+    
+  
+
