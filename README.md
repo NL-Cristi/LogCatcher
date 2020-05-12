@@ -19,7 +19,7 @@
  
   ## The tool __ONLY__ is only for centralizing all logs in one place in a __ZIP__.
   
-  We recomend you to inspect the zip before shareing it with anyone.
+  We recomend you to inspect the zip before sharing it with anyone.
 
   The structure of the ZIP should be simillar to the following diagram: 
 
