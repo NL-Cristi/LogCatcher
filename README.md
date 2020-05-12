@@ -26,7 +26,7 @@
 ```bash
 ├───General
 │       ├── HttpErr
-│       │     ├── httpr.config
+│       │     ├── httperr*.config
 │       ├── IISConfig
 │       │     ├── administration.config
 │       │     ├── applicationHost.config
@@ -58,12 +58,17 @@
 
  #
 The tool will help you gather the right data at the right time.  
-The tool collects logs that Microsoft Support Engineers use in order to diagnose IIS issues. 
-This tool is developed by members of the IIS Support Team within Microsoft so it is ready to collect logs for issues we regularly encounter.
+The tool collects logs that Microsoft Support Engineers use in order to diagnose __IIS__ issues. 
+
+
+This tool is developed by members of the <a class="github-button" href="https://github.com/crnegule/LogCatcher/blob/master/README.md#authorsGitHub">members of the __IIS Support Team__</a>  so it is ready to collect logs for issues we regularly encounter.
+
 We would send this tool to you, generally as part of a support case, and gather data to help you diagnose your issue.  
+
 You can also download the tool on your own from our GitHub page if you want to try to diagnose the issue by yourself.
 
-Our main focus is around reducing troubleshooting time and improving response times for our technical support customers. 
+Our main focus is around reducing troubleshooting time and improving response times for our customers. 
+
 
 #
 
