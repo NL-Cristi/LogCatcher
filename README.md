@@ -1,4 +1,4 @@
- # __LogCatcher__
+ # ![Image of FirstScreen](/images/LogCatcher-img-48.png)   __LogCatcher__ 
  [Download LatestZIP](https://github.com/crnegule/LogCatcher/releases/latest)|[How To Run First Time](https://github.com/crnegule/LogCatcher/blob/master/Docs/RunFirstTime.md) |[Tool Description](https://github.com/crnegule/LogCatcher/blob/master/Docs/ToolDescription.md)|[For 2008R2](https://github.com/crnegule/LogCatcher/blob/master/Docs/2008R2.md)
  -------------| -------------| -------------| -------------
 
