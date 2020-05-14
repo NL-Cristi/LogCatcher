@@ -1,5 +1,5 @@
 function CatchFilteredIISzip {
-    $date = Get-Date -Format "yyyy-MM-dd-T-HH-mm-ss"
+    $date = Get-Date -Format "yy-MM-dd-T-HH-mm-ss"
     $Time = Get-Date 
     "$Time Tool was run with for the SiteIDS: $FilteredSitesIDs with LogAge filter set at $MaxDays" | Out-File $ToolLog -Append -Force
     PopulateFilteredLogDefinition -ErrorAction silentlycontinue -ErrorVariable +ErrorMessages | Out-Null
@@ -7,20 +7,21 @@ function CatchFilteredIISzip {
     $FilteredTempLocation = $scriptPath + "\FilteredMSDT"
     If (Test-path $FilteredTempLocation) { Get-ChildItem $FilteredTempLocation | Remove-Item -Recurse -ErrorAction silentlycontinue -ErrorVariable +ErrorMessages }
     new-item -Path $scriptPath -ItemType "directory" -Name "FilteredMSDT" -ErrorAction silentlycontinue -ErrorVariable +ErrorMessages | Out-Null
-    $Global:FilteredZipFile = $ZipOutput + "\LOGS-" + $date + ".zip"
+    $Global:FilteredZipFile = $ZipOutput + "\IIS-Logs-" + $date + ".zip"
     If (Test-path $FilteredZipFile) { Remove-item $FilteredZipFile -Force } 
     $GeneralTempLocation = $FilteredTempLocation + "\General"
     $SiteTempLocation = $FilteredTempLocation + "\Sites"
     foreach ($FilteredLogDefinition in $FilteredLOGSDefinitions) {
         if ($FilteredLogDefinition.Level -eq 'Site') {
             if ($FilteredLogDefinition.Product -eq "SitePath" ) {
-                $idFloder = $SiteTempLocation + "\" + $FilteredLogDefinition.LogName     
+                $idFloder = $SiteTempLocation + "\" + $FilteredLogDefinition.LogName
                 new-item -Path $SiteTempLocation -ItemType "directory" -Name $FilteredLogDefinition.LogName -ErrorAction silentlycontinue -ErrorVariable +ErrorMessages | Out-Null
                 Robocopy.exe $FilteredLogDefinition.Location $idFloder *.config /s | Out-Null
             }
-            elseif ($FilteredLogDefinition.Product -eq "VappPath" ) {
-                $idFloder = $SiteTempLocation + "\" + $FilteredLogDefinition.LogName
-                new-item -Path $SiteTempLocation -ItemType "directory" -Name $FilteredLogDefinition.LogName -ErrorAction silentlycontinue -ErrorVariable +ErrorMessages | Out-Null
+            elseif ($FilteredLogDefinition.Product -eq "AppPath" ) {
+                $idFloder = $SiteTempLocation + "\" + $FilteredLogDefinition.ParentSite + "\" + $FilteredLogDefinition.LogName   
+                $webfolder = $FilteredLogDefinition.ParentSite + "\" + $FilteredLogDefinition.LogName
+                new-item -Path $SiteTempLocation -ItemType "directory" -Name $webfolder -ErrorAction silentlycontinue -ErrorVariable +ErrorMessages | Out-Null
                 Robocopy.exe $FilteredLogDefinition.Location $idFloder *.config /s | Out-Null
             }
             elseif ($FilteredLogDefinition.Product -eq "FrebLogs" ) {
@@ -51,6 +52,10 @@ function CatchFilteredIISzip {
                     Robocopy.exe $FilteredLogDefinition.Location $NETFramework *.config /s | Out-Null
                 }
             }
+            elseif ( $FilteredLogDefinition.Product -eq "Tool" ) {
+                Copy-Item -Path $FilteredLogDefinition.Location -Destination $FilteredTempLocation -Recurse -Force -ErrorAction silentlycontinue -ErrorVariable +ErrorMessages
+ 
+            }
             else {
                 Copy-Item -Path $FilteredLogDefinition.Location -Destination $GeneralTempLocation -Recurse -Force -ErrorAction silentlycontinue -ErrorVariable +ErrorMessages
  
@@ -59,7 +64,7 @@ function CatchFilteredIISzip {
     }
 
     GetOsInfo -ErrorAction silentlycontinue -ErrorVariable +ErrorMessages | Out-Null
-    $osInfoLog = $GeneralTempLocation + "\OsInfo.txt"
+    $osInfoLog = $GeneralTempLocation + "\SrvInfo.txt"
     
     $Global:OsVer | out-file -FilePath $osInfoLog -Append -Force
     $Global:NetVersion | out-file -FilePath $osInfoLog -Append -Force
@@ -77,7 +82,7 @@ function CatchFilteredIISzip {
     IF ($iisInfo.MajorVersion -ge 8) {
         if ($Host.Version.Major -ge 5) {
             GenerateSiteOverview -ErrorAction silentlycontinue -ErrorVariable +ErrorMessages | Out-Null
-            $logName = $GeneralTempLocation + "\SiteOverview.csv"
+            $logName = $GeneralTempLocation + "\SitesOverview.csv"
             $Global:SiteOverview | Export-csv -Path $logName -NoTypeInformation -Force -ErrorAction silentlycontinue -ErrorVariable +ErrorMessages
              Add-Type -assembly "system.io.compression.filesystem"
             [io.compression.zipfile]::CreateFromDirectory($FilteredTempLocation, $FilteredZipFile)

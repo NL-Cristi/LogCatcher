@@ -40,36 +40,43 @@ __LogCatcher doesn't automatically upload the files to the Microsoft servers bec
   The structure of the ZIP should be simillar to the following diagram: 
 
 ```bash
-├───General
-│       ├── HttpErr
-│       │     ├── httperr*.config
-│       ├── IISConfig
-│       │     ├── administration.config
-│       │     ├── applicationHost.config
-│       │     └── redirection.config
-│       ├── NETFramework
-│       │     ├── assembly\*\*.config
-│       │     ├── Framework\*\*.config
-│       │     └── Framework64\*\*.config
-│       ├── Application.evtx
-│       ├── LOGS.CSV
-│       ├── OsInfo.txt
-│       ├── Security.evtx
-│       ├── Setup.evtx
-│       ├── SiteOverview.csv
-│       ├── System.evtx
-│       └── ToolLog.log
-│
-└─── Sites
-      ├── bin
-      │    └── *.config
-      ├── FrebLogs
-      │    ├── u_ex*.log
-      │    └── freb.xsl
-      ├── IISLogs
-      │    └── u_ex*.log
-      ├── web.config
-      └── *.config
+IIS-Log.zip
+    ├─── FolderContents.txt
+    ├─── LogsInfo.CSV
+    ├─── ToolLog.log
+    │
+    ├─── General
+    │       ├── HttpErr
+    │       │     ├── httperr*.config
+    │       ├── IISConfig
+    │       │     ├── administration.config
+    │       │     ├── applicationHost.config
+    │       │     └── redirection.config
+    │       ├── NETFramework
+    │       │     ├── assembly\*\*.config
+    │       │     ├── Framework\*\*.config
+    │       │     └── Framework64\*\*.config
+    │       ├── Application.evtx
+    │       ├── LOGS.CSV
+    │       ├── OsInfo.txt
+    │       ├── Security.evtx
+    │       ├── Setup.evtx
+    │       ├── SiteOverview.csv
+    │       ├── System.evtx
+    │       └── ToolLog.log
+    │
+    └─── Sites
+            ├── bin
+            │    └── *.config
+            ├── FrebLogs
+            │    ├── u_ex*.log
+            │    └── freb.xsl
+            ├── IISLogs
+            │    └── u_ex*.log
+            ├── web.config
+            └── *.config
+
+
 ```
 
  #

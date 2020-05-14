@@ -5,18 +5,23 @@ Function PopulateFilteredLogDefinition {
 
     $LogDef = @()
     $FilteredSiteInfo = @()
+    $FilteredWebs = @()
     #endregion
 
     if ($FilteredSitesIDs.Count -gt 1) {
         foreach ($siteid in $FilteredSitesIDs) {
             $SiteDetails = Get-Website | Where-Object { $_.ID -eq "$siteid" }
             $FilteredSiteInfo += $SiteDetails
+            $tempwebs = Get-WebApplication |  Where-Object { ($_.ItemXPath).split("'")[3] -eq "$siteid" }
+			$FilteredWebs += $tempwebs
         } 
     }
     else {
         foreach ($siteid in $FilteredSitesIDs) {
             $SiteDetails = Get-Website | Where-Object { $_.ID -eq "$siteid" }
-            $FilteredSiteInfo += $SiteDetails 
+            $FilteredSiteInfo += $SiteDetails
+            $tempwebs = Get-WebApplication |  Where-Object { $_.ItemXPath.split("'")[3] -eq "$siteid" }
+			$FilteredWebs += $tempwebs
         }
     }
     
@@ -31,20 +36,28 @@ Function PopulateFilteredLogDefinition {
         $LogDefQuery | Add-Member -MemberType NoteProperty -Name Location -Value ''
         $LogDefQuery | Add-Member -MemberType NoteProperty -Name TypeInfo -Value ''
         $LogDefQuery | Add-Member -MemberType NoteProperty -Name Level -Value ''
+        $LogDefQuery | Add-Member -MemberType NoteProperty -Name SiteID -Value ''
+        $LogDefQuery | Add-Member -MemberType NoteProperty -Name ParentSite -Value ''
+        $LogDefQuery | Add-Member -MemberType NoteProperty -Name PoolName -Value ''
+
         #endregion
         $LogDefQuery.ComputerName = $env:COMPUTERNAME
         $LogDefQuery.Level = "Site"
         $LogDefQuery.Location = $siteinfo.physicalPath
         $LogDefQuery.LogName = $siteinfo.Name
+        $LogDefQuery.PoolName = $siteinfo.applicationPool
         $LogDefQuery.Product = "SitePath"
         $LogDefQuery.TypeInfo = "Folder"
+        $LogDefQuery.SiteID = $siteinfo.id
+        $LogDefQuery.ParentSite = $siteinfo.Name
+
 
         $LogDef += $LogDefQuery
 
     }
 
-        $webApplications = Get-WebApplication
-    foreach ($vweb in $webApplications) {
+
+    foreach ($web in $FilteredWebs) {
         #region LogDefQuery
         $LogDefQuery = New-Object PsObject
         $LogDefQuery | Add-Member -MemberType NoteProperty -Name ComputerName -Value ''
@@ -53,13 +66,22 @@ Function PopulateFilteredLogDefinition {
         $LogDefQuery | Add-Member -MemberType NoteProperty -Name Location -Value ''
         $LogDefQuery | Add-Member -MemberType NoteProperty -Name TypeInfo -Value ''
         $LogDefQuery | Add-Member -MemberType NoteProperty -Name Level -Value ''
+        $LogDefQuery | Add-Member -MemberType NoteProperty -Name SiteID -Value ''
+        $LogDefQuery | Add-Member -MemberType NoteProperty -Name ParentSite -Value ''
+        $LogDefQuery | Add-Member -MemberType NoteProperty -Name PoolName -Value ''
+
+
         #endregion
         $LogDefQuery.ComputerName = $env:COMPUTERNAME
-        $LogDefQuery.Level = "Site"
-        $LogDefQuery.Location = $vweb.physicalPath
-        $LogDefQuery.LogName = $vweb.path.Replace("/","_")
-        $LogDefQuery.Product = "VappPath"
+        $LogDefQuery.LogName = $web.ItemXPath.split("'")[5].Substring(1).Replace("/","\")
+        $LogDefQuery.Product = "AppPath"
+        $LogDefQuery.Location = $web.physicalPath
+        $LogDefQuery.PoolName = $web.applicationPool
         $LogDefQuery.TypeInfo = "Folder"
+        $LogDefQuery.Level = "Site"
+        $LogDefQuery.ParentSite = $web.ItemXPath.split("'")[1]
+        $LogDefQuery.SiteID = $web.ItemXPath.split("'")[3]
+
 
         $LogDef += $LogDefQuery
 
@@ -76,11 +98,18 @@ Function PopulateFilteredLogDefinition {
         $LogDefQuery | Add-Member -MemberType NoteProperty -Name Location -Value ''
         $LogDefQuery | Add-Member -MemberType NoteProperty -Name TypeInfo -Value ''
         $LogDefQuery | Add-Member -MemberType NoteProperty -Name Level -Value ''
+        $LogDefQuery | Add-Member -MemberType NoteProperty -Name SiteID -Value ''
+        $LogDefQuery | Add-Member -MemberType NoteProperty -Name ParentSite -Value ''
+        $LogDefQuery | Add-Member -MemberType NoteProperty -Name PoolName -Value ''
+
+
         #endregion
         $LogDefQuery.ComputerName = $env:COMPUTERNAME
         $LogDefQuery.Level = "Site"
         $LogDefQuery.Location = $siteinfo.logFile.directory + "\W3SVC" + $siteinfo.id -replace "%SystemDrive%", "$env:SystemDrive"
         $LogDefQuery.LogName = $siteinfo.Name
+        $LogDefQuery.SiteID = $siteinfo.id
+        $LogDefQuery.ParentSite = $siteinfo.Name
         $LogDefQuery.Product = "IISLogs"
         $LogDefQuery.TypeInfo = "Folder"
         $LogDef += $LogDefQuery
@@ -98,12 +127,18 @@ Function PopulateFilteredLogDefinition {
         $LogDefQuery | Add-Member -MemberType NoteProperty -Name Location -Value ''
         $LogDefQuery | Add-Member -MemberType NoteProperty -Name TypeInfo -Value ''
         $LogDefQuery | Add-Member -MemberType NoteProperty -Name Level -Value ''
+        $LogDefQuery | Add-Member -MemberType NoteProperty -Name SiteID -Value ''
+        $LogDefQuery | Add-Member -MemberType NoteProperty -Name ParentSite -Value ''
+        $LogDefQuery | Add-Member -MemberType NoteProperty -Name PoolName -Value ''
+
         #endregion
         if ($siteinfo.traceFailedRequestsLogging.enabled -eq "True") {
             $LogDefQuery.ComputerName = $env:COMPUTERNAME
             $LogDefQuery.Level = "Site"
             $LogDefQuery.Location = $siteinfo.traceFailedRequestsLogging.directory + "\W3SVC" + $siteinfo.id -replace "%SystemDrive%", "$env:SystemDrive"
             $LogDefQuery.LogName = $siteinfo.Name
+            $LogDefQuery.SiteID = $siteinfo.id
+            $LogDefQuery.ParentSite = $siteinfo.Name
             $LogDefQuery.Product = "FrebLogs"
             $LogDefQuery.TypeInfo = "Folder"
             $LogDef += $LogDefQuery
@@ -125,6 +160,10 @@ Function PopulateFilteredLogDefinition {
     $LogDefQuery | Add-Member -MemberType NoteProperty -Name Location -Value ''
     $LogDefQuery | Add-Member -MemberType NoteProperty -Name TypeInfo -Value ''
     $LogDefQuery | Add-Member -MemberType NoteProperty -Name Level -Value ''
+    $LogDefQuery | Add-Member -MemberType NoteProperty -Name SiteID -Value ''
+    $LogDefQuery | Add-Member -MemberType NoteProperty -Name ParentSite -Value ''
+    $LogDefQuery | Add-Member -MemberType NoteProperty -Name PoolName -Value ''
+
     #endregion
 
 
@@ -148,6 +187,10 @@ Function PopulateFilteredLogDefinition {
     $LogDefQuery | Add-Member -MemberType NoteProperty -Name Location -Value ''
     $LogDefQuery | Add-Member -MemberType NoteProperty -Name TypeInfo -Value ''
     $LogDefQuery | Add-Member -MemberType NoteProperty -Name Level -Value ''
+    $LogDefQuery | Add-Member -MemberType NoteProperty -Name SiteID -Value ''
+    $LogDefQuery | Add-Member -MemberType NoteProperty -Name ParentSite -Value ''
+    $LogDefQuery | Add-Member -MemberType NoteProperty -Name PoolName -Value ''
+
     #endregion
 
 
@@ -166,13 +209,15 @@ Function PopulateFilteredLogDefinition {
         foreach ($iiseventLog in $IISEventLogs) 
         {
            #region LogDefQuery
-             $LogDefQuery = New-Object PsObject
+           $LogDefQuery = New-Object PsObject
            $LogDefQuery | Add-Member -MemberType NoteProperty -Name ComputerName -Value ''
            $LogDefQuery | Add-Member -MemberType NoteProperty -Name LogName -Value ''
            $LogDefQuery | Add-Member -MemberType NoteProperty -Name Product -Value ''
            $LogDefQuery | Add-Member -MemberType NoteProperty -Name Location -Value ''
            $LogDefQuery | Add-Member -MemberType NoteProperty -Name TypeInfo -Value ''
            $LogDefQuery | Add-Member -MemberType NoteProperty -Name Level -Value ''
+           $LogDefQuery | Add-Member -MemberType NoteProperty -Name SiteID -Value ''
+           $LogDefQuery | Add-Member -MemberType NoteProperty -Name ParentSite -Value ''
            #endregion
            
            #region PopulateLogDefQuery 
@@ -198,6 +243,10 @@ Function PopulateFilteredLogDefinition {
     $LogDefQuery | Add-Member -MemberType NoteProperty -Name Location -Value ''
     $LogDefQuery | Add-Member -MemberType NoteProperty -Name TypeInfo -Value ''
     $LogDefQuery | Add-Member -MemberType NoteProperty -Name Level -Value ''
+    $LogDefQuery | Add-Member -MemberType NoteProperty -Name SiteID -Value ''
+    $LogDefQuery | Add-Member -MemberType NoteProperty -Name ParentSite -Value ''
+    $LogDefQuery | Add-Member -MemberType NoteProperty -Name PoolName -Value ''
+
     #endregion
 
 
@@ -220,6 +269,10 @@ Function PopulateFilteredLogDefinition {
     $LogDefQuery | Add-Member -MemberType NoteProperty -Name Location -Value ''
     $LogDefQuery | Add-Member -MemberType NoteProperty -Name TypeInfo -Value ''
     $LogDefQuery | Add-Member -MemberType NoteProperty -Name Level -Value ''
+    $LogDefQuery | Add-Member -MemberType NoteProperty -Name SiteID -Value ''
+    $LogDefQuery | Add-Member -MemberType NoteProperty -Name ParentSite -Value ''
+    $LogDefQuery | Add-Member -MemberType NoteProperty -Name PoolName -Value ''
+
     #endregion
 
 
@@ -233,7 +286,35 @@ Function PopulateFilteredLogDefinition {
     $LogDef += $LogDefQuery
 
     #endregion
-	
+    
+     #region ContentStructure
+    #region LogDefQuery
+    $LogDefQuery = New-Object PsObject
+    $LogDefQuery | Add-Member -MemberType NoteProperty -Name ComputerName -Value ''
+    $LogDefQuery | Add-Member -MemberType NoteProperty -Name LogName -Value ''
+    $LogDefQuery | Add-Member -MemberType NoteProperty -Name Product -Value ''
+    $LogDefQuery | Add-Member -MemberType NoteProperty -Name Location -Value ''
+    $LogDefQuery | Add-Member -MemberType NoteProperty -Name TypeInfo -Value ''
+    $LogDefQuery | Add-Member -MemberType NoteProperty -Name Level -Value ''
+    $LogDefQuery | Add-Member -MemberType NoteProperty -Name SiteID -Value ''
+    $LogDefQuery | Add-Member -MemberType NoteProperty -Name ParentSite -Value ''
+    $LogDefQuery | Add-Member -MemberType NoteProperty -Name PoolName -Value ''
+
+    #endregion
+
+
+    $LogDefQuery.ComputerName = $env:COMPUTERNAME
+    $LogDefQuery.Level = "Server"
+    $LogDefQuery.Location = $Global:ContentStructure
+    $LogDefQuery.LogName = "Content"
+    $LogDefQuery.Product = "Tool"
+    $LogDefQuery.TypeInfo = "File"
+
+    $LogDef += $LogDefQuery
+
+    #endregion
+
+
 	#region DotNet
     #region LogDefQuery
     $LogDefQuery = New-Object PsObject
@@ -243,6 +324,10 @@ Function PopulateFilteredLogDefinition {
     $LogDefQuery | Add-Member -MemberType NoteProperty -Name Location -Value ''
     $LogDefQuery | Add-Member -MemberType NoteProperty -Name TypeInfo -Value ''
     $LogDefQuery | Add-Member -MemberType NoteProperty -Name Level -Value ''
+    $LogDefQuery | Add-Member -MemberType NoteProperty -Name SiteID -Value ''
+    $LogDefQuery | Add-Member -MemberType NoteProperty -Name ParentSite -Value ''
+    $LogDefQuery | Add-Member -MemberType NoteProperty -Name PoolName -Value ''
+
     #endregion
 
 
