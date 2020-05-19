@@ -64,6 +64,7 @@ function CatchFilteredIISzip {
     }
 
     GetOsInfo -ErrorAction silentlycontinue -ErrorVariable +ErrorMessages | Out-Null
+    GetOsFeatures -ErrorAction silentlycontinue -ErrorVariable +ErrorMessages | Out-Null
     $osInfoLog = $GeneralTempLocation + "\SrvInfo.txt"
     
     $Global:OsVer | out-file -FilePath $osInfoLog -Append -Force

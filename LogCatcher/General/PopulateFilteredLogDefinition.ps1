@@ -447,11 +447,10 @@ function GenerateSiteOverview {
                 $Global:SiteOverview += $IISDefQuery
        } 
 }
-
 Function GetOsInfo { 
     $Global:NetVersion = @()
     $Global:WinHotFix = @()
-    $Global:OsFeatures = @()
+    
     $Global:OsVer = New-Object PsObject
     
 $DotNetVersion = Get-ChildItem 'HKLM:\SOFTWARE\Microsoft\NET Framework Setup\NDP' -Recurse | Get-ItemProperty -Name Version, Release -ErrorAction 0 | Where-Object { $_.PSChildName -match '^(?!S)\p{L}'} | select PSChildName, Version, Release
@@ -476,7 +475,17 @@ foreach ($fix in $hotfix) {
     $fixinfo.HotFixID = $fix.HotFixID
     $Global:WinHotFix += $fixinfo    }
 
-$WindowsFeatures = Get-WindowsFeature| Where Installed
+    $OsVer | Add-Member -MemberType NoteProperty -Name ComputerName -Value ''
+    $OsVer | Add-Member -MemberType NoteProperty -Name OsVersion -Value ''
+    $OsVer | Add-Member -MemberType NoteProperty -Name Edition -Value ''
+    $OsVer.ComputerName = $Env:COMPUTERNAME
+    $OsVer.OsVersion = ([System.Environment]::OSVersion.Version).ToString()
+    $OsVer.Edition = (Get-WindowsEdition -Online).Edition
+}
+
+Function GetOsFeatures{ 
+ $Global:OsFeatures = @()
+    $WindowsFeatures = Get-WindowsFeature -ErrorAction:SilentlyContinue -ErrorVariable +ErrorMessages | Where-Object Installed
 foreach ($feature in $WindowsFeatures) {
     $fetureInfo = New-Object PsObject
     $fetureInfo | Add-Member -MemberType NoteProperty -Name Name -Value ''
@@ -486,15 +495,6 @@ foreach ($feature in $WindowsFeatures) {
     $fetureInfo.FeatureType = $feature.FeatureType
     $fetureInfo.Depth = $feature.Depth
     $Global:OsFeatures += $fetureInfo}
+ 
 
-    $OsVer | Add-Member -MemberType NoteProperty -Name ComputerName -Value ''
-    $OsVer | Add-Member -MemberType NoteProperty -Name OsVersion -Value ''
-    $OsVer | Add-Member -MemberType NoteProperty -Name Edition -Value ''
-    $OsVer.ComputerName = $Env:COMPUTERNAME
-    $OsVer.OsVersion = ([System.Environment]::OSVersion.Version).ToString()
-    $OsVer.Edition = (Get-WindowsEdition -Online).Edition
 }
-
-    
-  
-
