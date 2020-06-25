@@ -58,7 +58,7 @@ IIS-Log.zip
     │       │     └── Framework64\*\*.config
     │       ├── Application.evtx
     │       ├── LOGS.CSV
-    │       ├── OsInfo.txt
+    │       ├── SrvInfo.txt
     │       ├── Security.evtx
     │       ├── Setup.evtx
     │       ├── SiteOverview.csv
