@@ -1,5 +1,5 @@
 function CatchFilteredIISzip {
-    $date = Get-Date -Format "yy-MM-dd-T-HH-mm-ss"
+    $date = Get-Date -Format "yy-MM-dd-HH-mm-ss"
     $Time = Get-Date 
     "$Time Tool was run with for the SiteIDS: $FilteredSitesIDs with LogAge filter set at $MaxDays" | Out-File $ToolLog -Append -Force
     PopulateFilteredLogDefinition -ErrorAction silentlycontinue -ErrorVariable +ErrorMessages | Out-Null
@@ -7,7 +7,7 @@ function CatchFilteredIISzip {
     $FilteredTempLocation = $scriptPath + "\FilteredMSDT"
     If (Test-path $FilteredTempLocation) { Get-ChildItem $FilteredTempLocation | Remove-Item -Recurse -ErrorAction silentlycontinue -ErrorVariable +ErrorMessages }
     new-item -Path $scriptPath -ItemType "directory" -Name "FilteredMSDT" -ErrorAction silentlycontinue -ErrorVariable +ErrorMessages | Out-Null
-    $Global:FilteredZipFile = $ZipOutput + "\IIS-Logs-" + $date + ".zip"
+    $Global:FilteredZipFile = $ZipOutput + "\LOGcatcher-"+ $date + ".zip"
     If (Test-path $FilteredZipFile) { Remove-item $FilteredZipFile -Force } 
     $GeneralTempLocation = $FilteredTempLocation + "\General"
     $SiteTempLocation = $FilteredTempLocation + "\Sites"
@@ -56,15 +56,30 @@ function CatchFilteredIISzip {
                 Copy-Item -Path $FilteredLogDefinition.Location -Destination $FilteredTempLocation -Recurse -Force -ErrorAction silentlycontinue -ErrorVariable +ErrorMessages
  
             }
+            elseif ( $FilteredLogDefinition.TypeInfo -eq "evtx" ) {
+                $maxDaysMiliSeconds= (New-TimeSpan -Day $MaxDays).TotalMilliseconds
+                
+                $outputlog = $GeneralTempLocation+'\'+$FilteredLogDefinition.Location.Split("\")[5]
+                & wevtutil.exe epl $FilteredLogDefinition.LogName $outputlog "/q:*[System[TimeCreated[timediff(@SystemTime) <= ($maxDaysMiliSeconds)]]]" /ow:true
+                }
             else {
                 Copy-Item -Path $FilteredLogDefinition.Location -Destination $GeneralTempLocation -Recurse -Force -ErrorAction silentlycontinue -ErrorVariable +ErrorMessages
  
             }
         }
     }
-
+    #segmetn to get NETSH HTTP Config
     GetOsInfo -ErrorAction silentlycontinue -ErrorVariable +ErrorMessages | Out-Null
     GetOsFeatures -ErrorAction silentlycontinue -ErrorVariable +ErrorMessages | Out-Null
+    new-item -Path $GeneralTempLocation -ItemType "directory" -Name "NETSH-HTTP" -ErrorAction silentlycontinue -ErrorVariable +ErrorMessages | Out-Null
+    $NetSHpath = $GeneralTempLocation+"\NETSH-HTTP"
+    netsh http show cachestate | out-file -FilePath ($NetSHpath+"\cachestate.txt") -Append -Force
+    netsh http show iplisten | out-file -FilePath ($NetSHpath+"\iplisten.txt") -Append -Force
+    netsh http show servicestate | out-file -FilePath ($NetSHpath+"\servicestate.txt") -Append -Force
+    netsh http show sslcert | out-file -FilePath ($NetSHpath+"\sslcert.txt") -Append -Force
+    netsh http show timeout | out-file -FilePath ($NetSHpath+"\timeout.txt") -Append -Force
+    netsh http show urlacl | out-file -FilePath ($NetSHpath+"\urlacl.txt") -Append -Force
+
     $osInfoLog = $GeneralTempLocation + "\SrvInfo.txt"
     
     $Global:OsVer | out-file -FilePath $osInfoLog -Append -Force

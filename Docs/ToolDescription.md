@@ -30,11 +30,13 @@ __LogCatcher doesn't automatically upload the files to the Microsoft servers bec
    
     -------------------------- EXAMPLE 1 --------------------------
  
-    PS C:\>To start Tool with UI
+    PS C:\>To start Tool using CLI with Defaults prop
  
-    .\LogCatcher.ps1
+    .\LogCatcher.ps1 -Quiet $true 
+
+ PS C:\>To start Tool with UI
  
- 
+    .\LogCatcher.ps1 
  
  
     -------------------------- EXAMPLE 2 --------------------------

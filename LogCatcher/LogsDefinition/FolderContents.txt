@@ -1,4 +1,4 @@
-IIS-Log.zip
+LOGcatcher.zip
     ├─── FolderContents.txt
     ├─── LogsInfo.CSV
     ├─── ToolLog.log
@@ -14,6 +14,13 @@ IIS-Log.zip
     │       │     ├── assembly\*\*.config
     │       │     ├── Framework\*\*.config
     │       │     └── Framework64\*\*.config
+    │       ├── NETSH-HTTP
+    │       │     ├── cachestate.txt
+    │       │     ├── iplisten.txt
+    │       │     ├── servicestate.txt
+    │       │     ├── sslcert.txt
+    │       │     ├── timeout.txt
+    │       │     └── urlacl.txt
     │       ├── Application.evtx
     │       ├── LOGS.CSV
     │       ├── SrvInfo.txt
