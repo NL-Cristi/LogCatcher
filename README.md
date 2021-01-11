@@ -1,6 +1,10 @@
- # ![Image of FirstScreen](/images/LogCatcher-img-48.png)   __LogCatcher__ 
+ # ![Image of FirstScreen](/images/LogCatcher-img-48.png)   __LogCatcher__ ![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/crnegule/logcatcher?style=plastic) ![GitHub release (latest by date)](https://img.shields.io/github/downloads/crnegule/logcatcher/latest/total)
+
+ ![GitHub all releases](https://img.shields.io/github/downloads/crnegule/logcatcher/total?style=plastic)
+ ![GitHub issues](https://img.shields.io/github/issues-raw/crnegule/logcatcher?style=plastic)
  [Download LatestZIP](https://github.com/crnegule/LogCatcher/releases/latest)|[How To Run First Time](https://github.com/crnegule/LogCatcher/blob/master/Docs/RunFirstTime.md) |[Tool Description](https://github.com/crnegule/LogCatcher/blob/master/Docs/ToolDescription.md)|[For 2008R2](https://github.com/crnegule/LogCatcher/blob/master/Docs/2008R2.md)
  -------------| -------------| -------------| -------------
+
 
 
 
