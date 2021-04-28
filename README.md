@@ -73,20 +73,20 @@ LOGcatcher<Date of collection>.zip
     │       │     ├── sslcert.txt
     │       │     ├── timeout.txt
     │       │     └── urlacl.txt
-	  │       │
+    │       │
     │       ├── Application.evtx
     │       ├── Cap2.evtx
     │       ├── Security.evtx
     │       ├── Setup.evtx
     │       ├── SitesOverview.csv
-	  │       ├── SrvInfo.txt
+    │       ├── SrvInfo.txt
     │       ├── System.evtx
     │       └── ToolLog.log
     │
     └─── Sites
             ├── bin
             │    └── *.config
-			      │
+	    │
             ├── FrebLogs
             │    ├── u_ex*.log
             │    └── freb.xsl
@@ -94,7 +94,7 @@ LOGcatcher<Date of collection>.zip
             ├── IISLogs
             │    └── u_ex*.log
             ├── web.config
-			      │
+	    │
             └── *.config
 
 
