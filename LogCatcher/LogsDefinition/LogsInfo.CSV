@@ -1,34 +1,13 @@
 "ComputerName","LogName","Product","Location","TypeInfo","Level","SiteID","ParentSite","PoolName"
-"SRV-HOME","Default Web Site","SitePath","%SystemDrive%\inetpub\wwwroot","Folder","Site","1","Default Web Site","DefaultAppPool"
-"SRV-HOME","BugyCore","SitePath","C:\temp\MySites\BuggyCore","Folder","Site","2","BugyCore","BugyCore"
-"SRV-HOME","Buggy","SitePath","C:\temp\MySites\Buggy","Folder","Site","3","Buggy","TEST-Mama"
-"SRV-HOME","CSharp","SitePath","C:\temp\MySites\CSharpGuitar","Folder","Site","4","CSharp","CSharp"
-"SRV-HOME","TESTCX","SitePath","C:\temp\MySites\TESTCX","Folder","Site","5","TESTCX","TESTCX"
-"SRV-HOME","TEST","SitePath","C:\inetpub\wwwroot\FRDependet","Folder","Site","6","TEST","TEST"
-"SRV-HOME","Net","SitePath","C:\Demo\Net","Folder","Site","7","Net","Net"
-"SRV-HOME","WCF","SitePath","C:\temp\WCF","Folder","Site","8","WCF","WCF"
-"SRV-HOME","mama","SitePath","C:\TATA\iolo","Folder","Site","9","mama","DefaultAppPool"
-"SRV-HOME","RealEstate","AppPath","D:\Downloads\using-mongodb-aspdotnet-mvc\6-using-mongodb-aspdotnet-mvc-exercise-files\after\src\RealEstate","Folder","Site","1","Default Web Site","DefaultAppPool"
-"SRV-HOME","blabla","AppPath","C:\inetpub\wwwroot\mamam","Folder","Site","1","Default Web Site",".NET v2.0 Classic"
-"SRV-HOME","appCore","AppPath","C:\temp\MySites\BuggyCore","Folder","Site","3","Buggy","TEST-Mama"
-"SRV-HOME","Default Web Site","IISLogs","C:\inetpub\logs\LogFiles\W3SVC1","Folder","Site","1","Default Web Site",""
-"SRV-HOME","BugyCore","IISLogs","C:\inetpub\logs\LogFiles\W3SVC2","Folder","Site","2","BugyCore",""
-"SRV-HOME","Buggy","IISLogs","C:\inetpub\logs\LogFiles1\W3SVC3","Folder","Site","3","Buggy",""
-"SRV-HOME","CSharp","IISLogs","C:\inetpub\logs\LogFiles\W3SVC4","Folder","Site","4","CSharp",""
-"SRV-HOME","TESTCX","IISLogs","C:\inetpub\logs\LogFiles\W3SVC5","Folder","Site","5","TESTCX",""
-"SRV-HOME","TEST","IISLogs","C:\inetpub\logs\LogFiles\W3SVC6","Folder","Site","6","TEST",""
-"SRV-HOME","Net","IISLogs","C:\inetpub\logs\LogFiles\W3SVC7","Folder","Site","7","Net",""
-"SRV-HOME","WCF","IISLogs","C:\inetpub\logs\LogFiles\W3SVC8","Folder","Site","8","WCF",""
-"SRV-HOME","mama","IISLogs","C:\inetpub\logs\LogFiles\W3SVC9","Folder","Site","9","mama",""
-"SRV-HOME","BugyCore","FrebLogs","C:\inetpub\logs\FailedReqLogFiles\W3SVC2","Folder","Site","2","BugyCore",""
-"SRV-HOME","IISConfig","IIS","C:\Windows\system32\inetsrv\config","Folder","Server","","",""
-"SRV-HOME","HTTPERRLog","IIS","C:\Windows\System32\LogFiles\HTTPERR","Folder","Server","","",""
-"SRV-HOME","System","OS","C:\Windows\System32\Winevt\Logs\System.evtx","evtx","Server","","",
-"SRV-HOME","Security","OS","C:\Windows\System32\Winevt\Logs\Security.evtx","evtx","Server","","",
-"SRV-HOME","Application","OS","C:\Windows\System32\Winevt\Logs\Application.evtx","evtx","Server","","",
-"SRV-HOME","Setup","OS","C:\Windows\System32\Winevt\Logs\Setup.evtx","evtx","Server","","",
-"SRV-HOME","Microsoft-Windows-CAPI2/Operational","OS","C:\Windows\System32\Winevt\Logs\Microsoft-Windows-CAPI2%4Operational.evtx","evtx","Server","","",
-"SRV-HOME","ToolLog","Tool","D:\LOG-Stuff\LogCatcher\ScriptLog\ToolLog.log","File","Server","","",""
-"SRV-HOME","LogDefinition","Tool","D:\LOG-Stuff\LogCatcher\LogsDefinition\LogsInfo.CSV","File","Server","","",""
-"SRV-HOME","Content","Tool","D:\LOG-Stuff\LogCatcher\LogsDefinition\FolderContents.txt","File","Server","","",""
-"SRV-HOME","NetPath","OS","C:\Windows\Microsoft.NET\","Folder","Server","","",""
+"X-2019-IIS2","Default Web Site","SitePath","%SystemDrive%\inetpub\wwwroot","Folder","Site","1","Default Web Site","DefaultAppPool"
+"X-2019-IIS2","Default Web Site","IISLogs","C:\inetpub\logs\LogFiles\W3SVC1","Folder","Site","1","Default Web Site",""
+"X-2019-IIS2","IISConfig","IIS","C:\Windows\system32\inetsrv\config","Folder","Server","","",""
+"X-2019-IIS2","HTTPERRLog","IIS","C:\Windows\System32\LogFiles\HTTPERR","Folder","Server","","",""
+"X-2019-IIS2","Application","OS","C:\Windows\System32\Winevt\Logs\Application.evtx","evtx","Server","","",
+"X-2019-IIS2","Security","OS","C:\Windows\System32\Winevt\Logs\Security.evtx","evtx","Server","","",
+"X-2019-IIS2","System","OS","C:\Windows\System32\Winevt\Logs\System.evtx","evtx","Server","","",
+"X-2019-IIS2","Setup","OS","C:\Windows\System32\Winevt\Logs\Setup.evtx","evtx","Server","","",
+"X-2019-IIS2","ToolLog","Tool","C:\temp\Logcatcher\ScriptLog\ToolLog.log","File","Server","","",""
+"X-2019-IIS2","LogDefinition","Tool","C:\temp\Logcatcher\LogsDefinition\LogsInfo.CSV","File","Server","","",""
+"X-2019-IIS2","Content","Tool","C:\temp\Logcatcher\LogsDefinition\FolderContents.txt","File","Server","","",""
+"X-2019-IIS2","NetPath","OS","C:\Windows\Microsoft.NET\","Folder","Server","","",""

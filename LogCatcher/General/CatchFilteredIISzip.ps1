@@ -80,6 +80,16 @@ function CatchFilteredIISzip {
     netsh http show timeout | out-file -FilePath ($NetSHpath+"\timeout.txt") -Append -Force
     netsh http show urlacl | out-file -FilePath ($NetSHpath+"\urlacl.txt") -Append -Force
 
+       #segmetn to get CertificateInfo using CertUtil
+       new-item -Path $GeneralTempLocation -ItemType "directory" -Name "CertUtil" -ErrorAction silentlycontinue -ErrorVariable +ErrorMessages | Out-Null
+       $CertUtilpath = $GeneralTempLocation+"\CertUtil\"
+       $Stores = Get-Item cert:\LocalMachine\*
+
+       Foreach ($store in $Stores){
+       $StoreFileName = $CertUtilpath+$store.Name+".txt"
+              certutil -verifystore $store.Name  | out-file -FilePath $StoreFileName -Append -Force
+              }
+
     $osInfoLog = $GeneralTempLocation + "\SrvInfo.txt"
     
     $Global:OsVer | out-file -FilePath $osInfoLog -Append -Force

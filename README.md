@@ -44,22 +44,28 @@ __LogCatcher doesn't automatically upload the files to the Microsoft servers bec
   The structure of the ZIP should be similar to the following diagram: 
 
 ```bash
-LOGcatcher.zip
+LOGcatcher<Date of collection>.zip
     ├─── FolderContents.txt
     ├─── LogsInfo.CSV
     ├─── ToolLog.log
     │
     ├─── General
+    │       ├── CertUtil
+    │       │     └── *CertStoreName*.txt
+    │       │
     │       ├── HttpErr
-    │       │     ├── httperr*.config
+    │       │     └── httperr*.config
+    │       │
     │       ├── IISConfig
     │       │     ├── administration.config
     │       │     ├── applicationHost.config
     │       │     └── redirection.config
+    │       │
     │       ├── NETFramework
     │       │     ├── assembly\*\*.config
     │       │     ├── Framework\*\*.config
     │       │     └── Framework64\*\*.config
+    │       │
     │       ├── NETSH-HTTP
     │       │     ├── cachestate.txt
     │       │     ├── iplisten.txt
@@ -67,24 +73,28 @@ LOGcatcher.zip
     │       │     ├── sslcert.txt
     │       │     ├── timeout.txt
     │       │     └── urlacl.txt
+	  │       │
     │       ├── Application.evtx
-    │       ├── LOGS.CSV
-    │       ├── SrvInfo.txt
+    │       ├── Cap2.evtx
     │       ├── Security.evtx
     │       ├── Setup.evtx
-    │       ├── SiteOverview.csv
+    │       ├── SitesOverview.csv
+	  │       ├── SrvInfo.txt
     │       ├── System.evtx
     │       └── ToolLog.log
     │
     └─── Sites
             ├── bin
             │    └── *.config
+			      │
             ├── FrebLogs
             │    ├── u_ex*.log
             │    └── freb.xsl
+            │
             ├── IISLogs
             │    └── u_ex*.log
             ├── web.config
+			      │
             └── *.config
 
 
