@@ -6,20 +6,20 @@ LOGcatcher<Date of collection>.zip
     ├─── General
     │       ├── CertUtil
     │       │     └── *CertStoreName*.txt
-	│		│
+    │	    │
     │       ├── HttpErr
     │       │     └── httperr*.config
-	│		│
+    │       │
     │       ├── IISConfig
     │       │     ├── administration.config
     │       │     ├── applicationHost.config
-	│		│
+    │ 	    │     │  
     │       │     └── redirection.config
     │       ├── NETFramework
     │       │     ├── assembly\*\*.config
     │       │     ├── Framework\*\*.config
     │       │     └── Framework64\*\*.config
-	│		│
+    │	    │
     │       ├── NETSH-HTTP
     │       │     ├── cachestate.txt
     │       │     ├── iplisten.txt
@@ -27,26 +27,26 @@ LOGcatcher<Date of collection>.zip
     │       │     ├── sslcert.txt
     │       │     ├── timeout.txt
     │       │     └── urlacl.txt
-	│		│
+    │       │
     │       ├── Application.evtx
     │       ├── Cap2.evtx
     │       ├── Security.evtx
     │       ├── Setup.evtx
     │       ├── SitesOverview.csv
-	│       ├── SrvInfo.txt
+    │       ├── SrvInfo.txt
     │       ├── System.evtx
     │       └── ToolLog.log
     │
     └─── Sites
             ├── bin
             │    └── *.config
-			│
+	    │
             ├── FrebLogs
             │    ├── u_ex*.log
             │    └── freb.xsl
-			│
+	    │
             ├── IISLogs
             │    └── u_ex*.log
             ├── web.config
-			│
+            │
             └── *.config
