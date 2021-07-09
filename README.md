@@ -26,7 +26,7 @@ The tool collects logs that Microsoft Support Engineers use in order to diagnose
 
 
 
-This tool is developed by  [__members of the IIS Support Team__](https://github.com/crnegule/LogCatcher/blob/master/README.md#authors) so it is ready to collect logs for issues we regularly encounter.
+This tool is developed by  [__IIS Support Engineers__](https://github.com/crnegule/LogCatcher/blob/master/README.md#authors) so it is ready to collect logs for issues we regularly encounter.
 
 We would send this tool to you, generally as part of a support case, and gather data to help you diagnose your issue.  
 
