@@ -105,7 +105,7 @@ LOGcatcher<Date of collection>.zip
 
 ## Authors
 
-* <a class="github-button" href="https://github.com/crnegule" data-icon="octicon-cloud-download" aria-label="Download ntkme/github-buttons on GitHub">Cristian Negulescu</a> 
+* <a class="github-button" href="https://github.com/cristian-clamsen" data-icon="octicon-cloud-download" aria-label="Download ntkme/github-buttons on GitHub">Cristian Negulescu</a> 
 * <a class="github-button" href="https://github.com/rogheorg" data-icon="octicon-cloud-download" aria-label="Download ntkme/github-buttons on GitHub">Roxana Gheorghe</a> 
 ### Please create a PR for any question or feature requests/changes .	
 
