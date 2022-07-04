@@ -1,4 +1,4 @@
-LogCatcherV3.3
+LogCatcherV3.4
 LOGcatcher<Date of collection>.zip
     ├─── FolderContents.txt
     ├─── LogsInfo.CSV

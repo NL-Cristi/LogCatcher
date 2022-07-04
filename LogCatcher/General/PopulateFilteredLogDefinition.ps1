@@ -13,7 +13,7 @@ Function PopulateFilteredLogDefinition {
             $SiteDetails = Get-Website | Where-Object { $_.ID -eq "$siteid" }
             $FilteredSiteInfo += $SiteDetails
             $tempwebs = Get-WebApplication |  Where-Object { ($_.ItemXPath).split("'")[3] -eq "$siteid" }
-			$FilteredWebs += $tempwebs
+            $FilteredWebs += $tempwebs
         } 
     }
     else {
@@ -21,7 +21,7 @@ Function PopulateFilteredLogDefinition {
             $SiteDetails = Get-Website | Where-Object { $_.ID -eq "$siteid" }
             $FilteredSiteInfo += $SiteDetails
             $tempwebs = Get-WebApplication |  Where-Object { $_.ItemXPath.split("'")[3] -eq "$siteid" }
-			$FilteredWebs += $tempwebs
+            $FilteredWebs += $tempwebs
         }
     }
     
@@ -73,7 +73,7 @@ Function PopulateFilteredLogDefinition {
 
         #endregion
         $LogDefQuery.ComputerName = $env:COMPUTERNAME
-        $LogDefQuery.LogName = $web.ItemXPath.split("'")[5].Substring(1).Replace("/","\")
+        $LogDefQuery.LogName = $web.ItemXPath.split("'")[5].Substring(1).Replace("/", "\")
         $LogDefQuery.Product = "AppPath"
         $LogDefQuery.Location = $web.physicalPath
         $LogDefQuery.PoolName = $web.applicationPool
@@ -204,34 +204,33 @@ Function PopulateFilteredLogDefinition {
     $LogDef += $LogDefQuery
 
     #endregion
-        #region PopulateEvtx
+    #region PopulateEvtx
 
-        foreach ($iiseventLog in $IISEventLogs) 
-        {
-           #region LogDefQuery
-           $LogDefQuery = New-Object PsObject
-           $LogDefQuery | Add-Member -MemberType NoteProperty -Name ComputerName -Value ''
-           $LogDefQuery | Add-Member -MemberType NoteProperty -Name LogName -Value ''
-           $LogDefQuery | Add-Member -MemberType NoteProperty -Name Product -Value ''
-           $LogDefQuery | Add-Member -MemberType NoteProperty -Name Location -Value ''
-           $LogDefQuery | Add-Member -MemberType NoteProperty -Name TypeInfo -Value ''
-           $LogDefQuery | Add-Member -MemberType NoteProperty -Name Level -Value ''
-           $LogDefQuery | Add-Member -MemberType NoteProperty -Name SiteID -Value ''
-           $LogDefQuery | Add-Member -MemberType NoteProperty -Name ParentSite -Value ''
-           #endregion
+    foreach ($iiseventLog in $IISEventLogs) {
+        #region LogDefQuery
+        $LogDefQuery = New-Object PsObject
+        $LogDefQuery | Add-Member -MemberType NoteProperty -Name ComputerName -Value ''
+        $LogDefQuery | Add-Member -MemberType NoteProperty -Name LogName -Value ''
+        $LogDefQuery | Add-Member -MemberType NoteProperty -Name Product -Value ''
+        $LogDefQuery | Add-Member -MemberType NoteProperty -Name Location -Value ''
+        $LogDefQuery | Add-Member -MemberType NoteProperty -Name TypeInfo -Value ''
+        $LogDefQuery | Add-Member -MemberType NoteProperty -Name Level -Value ''
+        $LogDefQuery | Add-Member -MemberType NoteProperty -Name SiteID -Value ''
+        $LogDefQuery | Add-Member -MemberType NoteProperty -Name ParentSite -Value ''
+        #endregion
            
-           #region PopulateLogDefQuery 
-           $LogDefQuery.ComputerName = $env:COMPUTERNAME
-           $LogDefQuery.Level = "Server"
-           $LogDefQuery.Location =  $iiseventLog.LogFilePath.ToString() -replace "%SystemRoot%", "$env:SystemRoot" 
-           $LogDefQuery.LogName = $iiseventLog.LogName.ToString()
-           $LogDefQuery.Product = "OS"
-           $LogDefQuery.TypeInfo = "evtx"
-           #endregion
+        #region PopulateLogDefQuery 
+        $LogDefQuery.ComputerName = $env:COMPUTERNAME
+        $LogDefQuery.Level = "Server"
+        $LogDefQuery.Location = $iiseventLog.LogFilePath.ToString() -replace "%SystemRoot%", "$env:SystemRoot" 
+        $LogDefQuery.LogName = $iiseventLog.LogName.ToString()
+        $LogDefQuery.Product = "OS"
+        $LogDefQuery.TypeInfo = "evtx"
+        #endregion
        
-           $LogDef += $LogDefQuery
-               }
-               #endregion
+        $LogDef += $LogDefQuery
+    }
+    #endregion
     
 
     #region ToolLog
@@ -287,7 +286,7 @@ Function PopulateFilteredLogDefinition {
 
     #endregion
     
-     #region ContentStructure
+    #region ContentStructure
     #region LogDefQuery
     $LogDefQuery = New-Object PsObject
     $LogDefQuery | Add-Member -MemberType NoteProperty -Name ComputerName -Value ''
@@ -315,7 +314,7 @@ Function PopulateFilteredLogDefinition {
     #endregion
 
 
-	#region DotNet
+    #region DotNet
     #region LogDefQuery
     $LogDefQuery = New-Object PsObject
     $LogDefQuery | Add-Member -MemberType NoteProperty -Name ComputerName -Value ''
@@ -396,34 +395,33 @@ function GenerateSiteOverview {
         $IISDefQuery.SiteName = $siteinfo.Name.ToString()
         $IISDefQuery.applicationPool = $siteinfo.applicationPool.ToString()
         $IISDefQuery.Path = $siteinfo.physicalPath.ToString()
-        $IISDefQuery.CLR = ((Get-Website $siteinfo.name).applicationPool |Get-IISAppPool).ManagedRuntimeVersion.ToString()
-        $IISDefQuery.Pipeline = ((Get-Website $siteinfo.name).applicationPool |Get-IISAppPool).ManagedPipelineMode.ToString()
-        $IISDefQuery.AutoStart = ((Get-Website $siteinfo.name).applicationPool |Get-IISAppPool).AutoStart.ToString()
-        $IISDefQuery.Enable32 = ((Get-Website $siteinfo.name).applicationPool |Get-IISAppPool ).Enable32BitAppOnWin64.ToString()
-        $IISDefQuery.QueueLength = ((Get-Website $siteinfo.name).applicationPool |Get-IISAppPool ).QueueLength.ToString()
+        $IISDefQuery.CLR = ((Get-Website $siteinfo.name).applicationPool | Get-IISAppPool).ManagedRuntimeVersion.ToString()
+        $IISDefQuery.Pipeline = ((Get-Website $siteinfo.name).applicationPool | Get-IISAppPool).ManagedPipelineMode.ToString()
+        $IISDefQuery.AutoStart = ((Get-Website $siteinfo.name).applicationPool | Get-IISAppPool).AutoStart.ToString()
+        $IISDefQuery.Enable32 = ((Get-Website $siteinfo.name).applicationPool | Get-IISAppPool ).Enable32BitAppOnWin64.ToString()
+        $IISDefQuery.QueueLength = ((Get-Website $siteinfo.name).applicationPool | Get-IISAppPool ).QueueLength.ToString()
         $IISDefQuery.maxBandwidth = (Get-Website $siteinfo.name).limits.maxBandwidth.ToString()     
-        $IISDefQuery.maxConnections =(Get-Website $siteinfo.name).limits.maxConnections.ToString()     
+        $IISDefQuery.maxConnections = (Get-Website $siteinfo.name).limits.maxConnections.ToString()     
         $IISDefQuery.connectionTimeout = (Get-Website $siteinfo.name).limits.connectionTimeout.ToString()     
         $IISDefQuery.maxUrlSegments = (Get-Website $siteinfo.name).limits.maxUrlSegments.ToString()       
         #CPU(Get-Website $siteinfo.name | Get-IISAppPool | Select-Object -ExpandProperty CPU)
         $IISDefQuery.Action = ((Get-Website $siteinfo.name).applicationPool | Get-IISAppPool | Select-Object -ExpandProperty CPU).Action.ToString()
         $IISDefQuery.Limit = ((Get-Website $siteinfo.name).applicationPool | Get-IISAppPool | Select-Object -ExpandProperty CPU).Limit.ToString()
-        $IISDefQuery.ResetInterval=((Get-Website $siteinfo.name).applicationPool | Get-IISAppPool | Select-Object -ExpandProperty CPU).ResetInterval.ToString()
-        $IISDefQuery.SmpAffinitized=((Get-Website $siteinfo.name).applicationPool | Get-IISAppPool | Select-Object -ExpandProperty CPU).SmpAffinitized.ToString()
-        $IISDefQuery.SmpProcessorAffinityMask=((Get-Website $siteinfo.name).applicationPool | Get-IISAppPool | Select-Object -ExpandProperty CPU).SmpProcessorAffinityMask.ToString()
-        $IISDefQuery.SmpProcessorAffinityMask2=((Get-Website $siteinfo.name).applicationPool | Get-IISAppPool | Select-Object -ExpandProperty CPU).SmpProcessorAffinityMask2.ToString()
+        $IISDefQuery.ResetInterval = ((Get-Website $siteinfo.name).applicationPool | Get-IISAppPool | Select-Object -ExpandProperty CPU).ResetInterval.ToString()
+        $IISDefQuery.SmpAffinitized = ((Get-Website $siteinfo.name).applicationPool | Get-IISAppPool | Select-Object -ExpandProperty CPU).SmpAffinitized.ToString()
+        $IISDefQuery.SmpProcessorAffinityMask = ((Get-Website $siteinfo.name).applicationPool | Get-IISAppPool | Select-Object -ExpandProperty CPU).SmpProcessorAffinityMask.ToString()
+        $IISDefQuery.SmpProcessorAffinityMask2 = ((Get-Website $siteinfo.name).applicationPool | Get-IISAppPool | Select-Object -ExpandProperty CPU).SmpProcessorAffinityMask2.ToString()
         #Recycling -> (Get-Website $siteinfo.name | Get-IISAppPool | Select-Object -ExpandProperty Recycling)
-        If (((Get-Website $siteinfo.name).applicationPool | Get-IISAppPool | Select-Object -ExpandProperty Recycling |Select-Object -ExpandProperty PeriodicRestart).Schedule.Time -eq $null)
-            {      
-        $IISDefQuery.RecyclingSchedule = "NotSet"
-            }      
-        else{
-        $IISDefQuery.RecyclingSchedule = ((Get-Website $siteinfo.name).applicationPool | Get-IISAppPool | Select-Object -ExpandProperty Recycling |Select-Object -ExpandProperty PeriodicRestart).Schedule.Time.ToString()
+        If (((Get-Website $siteinfo.name).applicationPool | Get-IISAppPool | Select-Object -ExpandProperty Recycling | Select-Object -ExpandProperty PeriodicRestart).Schedule.Time -eq $null) {      
+            $IISDefQuery.RecyclingSchedule = "NotSet"
+        }      
+        else {
+            $IISDefQuery.RecyclingSchedule = ((Get-Website $siteinfo.name).applicationPool | Get-IISAppPool | Select-Object -ExpandProperty Recycling | Select-Object -ExpandProperty PeriodicRestart).Schedule.Time.ToString()
         }  
-        $IISDefQuery.RecyclingTime = ((Get-Website $siteinfo.name).applicationPool | Get-IISAppPool | Select-Object -ExpandProperty Recycling |Select-Object -ExpandProperty PeriodicRestart).Time.ToString()
-        $IISDefQuery.RecyclingMemory = ((Get-Website $siteinfo.name).applicationPool | Get-IISAppPool | Select-Object -ExpandProperty Recycling |Select-Object -ExpandProperty PeriodicRestart).Memory.ToString()
-        $IISDefQuery.RecyclingPrivateMemory = ((Get-Website $siteinfo.name).applicationPool | Get-IISAppPool | Select-Object -ExpandProperty Recycling |Select-Object -ExpandProperty PeriodicRestart).PrivateMemory.ToString()
-        $IISDefQuery.RecyclingRequests = ((Get-Website $siteinfo.name).applicationPool | Get-IISAppPool | Select-Object -ExpandProperty Recycling |Select-Object -ExpandProperty PeriodicRestart).Requests.ToString()
+        $IISDefQuery.RecyclingTime = ((Get-Website $siteinfo.name).applicationPool | Get-IISAppPool | Select-Object -ExpandProperty Recycling | Select-Object -ExpandProperty PeriodicRestart).Time.ToString()
+        $IISDefQuery.RecyclingMemory = ((Get-Website $siteinfo.name).applicationPool | Get-IISAppPool | Select-Object -ExpandProperty Recycling | Select-Object -ExpandProperty PeriodicRestart).Memory.ToString()
+        $IISDefQuery.RecyclingPrivateMemory = ((Get-Website $siteinfo.name).applicationPool | Get-IISAppPool | Select-Object -ExpandProperty Recycling | Select-Object -ExpandProperty PeriodicRestart).PrivateMemory.ToString()
+        $IISDefQuery.RecyclingRequests = ((Get-Website $siteinfo.name).applicationPool | Get-IISAppPool | Select-Object -ExpandProperty Recycling | Select-Object -ExpandProperty PeriodicRestart).Requests.ToString()
         $IISDefQuery.RecyclingDisallowOverlappingRotation = ((Get-Website $siteinfo.name).applicationPool | Get-IISAppPool | Select-Object -ExpandProperty Recycling).DisallowOverlappingRotation.ToString()
         $IISDefQuery.RecyclingDisallowRotationOnConfigChange = ((Get-Website $siteinfo.name).applicationPool | Get-IISAppPool | Select-Object -ExpandProperty Recycling).DisallowRotationOnConfigChange.ToString()
         #Failure -> (Get-Website $siteinfo.name | Get-IISAppPool | Select-Object -ExpandProperty Failure)
@@ -432,9 +430,9 @@ function GenerateSiteOverview {
         $IISDefQuery.RapidFailProtectionInterval = ((Get-Website $siteinfo.name).applicationPool | Get-IISAppPool | Select-Object -ExpandProperty Failure).RapidFailProtectionInterval.ToString()
         $IISDefQuery.RapidFailProtectionMaxCrashes = ((Get-Website $siteinfo.name).applicationPool | Get-IISAppPool | Select-Object -ExpandProperty Failure).RapidFailProtectionMaxCrashes.ToString()
         #Idle -> (Get-Website $siteinfo.name | Get-IISAppPool | Select-Object -ExpandProperty ProcessModel)
-        $IISDefQuery.MaxProcesses = ((Get-Website $siteinfo.name).applicationPool |Get-IISAppPool | Select-Object -ExpandProperty ProcessModel).MaxProcesses.ToString()
-        $IISDefQuery.AppAccount = ((Get-Website $siteinfo.name).applicationPool  |Get-IISAppPool | Select-Object -ExpandProperty ProcessModel).UserName.ToString() 
-        $IISDefQuery.AccountType = ((Get-Website $siteinfo.name).applicationPool  |Get-IISAppPool | Select-Object -ExpandProperty ProcessModel).IdentityType.ToString() 
+        $IISDefQuery.MaxProcesses = ((Get-Website $siteinfo.name).applicationPool | Get-IISAppPool | Select-Object -ExpandProperty ProcessModel).MaxProcesses.ToString()
+        $IISDefQuery.AppAccount = ((Get-Website $siteinfo.name).applicationPool  | Get-IISAppPool | Select-Object -ExpandProperty ProcessModel).UserName.ToString() 
+        $IISDefQuery.AccountType = ((Get-Website $siteinfo.name).applicationPool  | Get-IISAppPool | Select-Object -ExpandProperty ProcessModel).IdentityType.ToString() 
         $IISDefQuery.IdleTimeout = ((Get-Website $siteinfo.name).applicationPool | Get-IISAppPool | Select-Object -ExpandProperty ProcessModel).IdleTimeout.ToString()
         $IISDefQuery.IdleTimeoutAction = ((Get-Website $siteinfo.name).applicationPool | Get-IISAppPool | Select-Object -ExpandProperty ProcessModel).IdleTimeoutAction.ToString()
         $IISDefQuery.LoadUserProfile = ((Get-Website $siteinfo.name).applicationPool | Get-IISAppPool | Select-Object -ExpandProperty ProcessModel).LoadUserProfile.ToString()
@@ -444,8 +442,8 @@ function GenerateSiteOverview {
         $IISDefQuery.ShutdownTimeLimit = ((Get-Website $siteinfo.name).applicationPool | Get-IISAppPool | Select-Object -ExpandProperty ProcessModel).ShutdownTimeLimit.ToString()
         $IISDefQuery.StartupTimeLimit = ((Get-Website $siteinfo.name).applicationPool | Get-IISAppPool | Select-Object -ExpandProperty ProcessModel).StartupTimeLimit.ToString()
         
-                $Global:SiteOverview += $IISDefQuery
-       } 
+        $Global:SiteOverview += $IISDefQuery
+    } 
 }
 Function GetOsInfo { 
     $Global:NetVersion = @()
@@ -453,27 +451,29 @@ Function GetOsInfo {
     
     $Global:OsVer = New-Object PsObject
     
-$DotNetVersion = Get-ChildItem 'HKLM:\SOFTWARE\Microsoft\NET Framework Setup\NDP' -Recurse | Get-ItemProperty -Name Version, Release -ErrorAction 0 | Where-Object { $_.PSChildName -match '^(?!S)\p{L}'} | select PSChildName, Version, Release
-foreach ($dotnet in $DotNetVersion) {
-    $dotnetver = New-Object PsObject
-    $dotnetver | Add-Member -MemberType NoteProperty -Name NDPver -Value ''
-    $dotnetver | Add-Member -MemberType NoteProperty -Name Version -Value ''
-    $dotnetver | Add-Member -MemberType NoteProperty -Name Release -Value ''
-    $dotnetver.NDPver = $dotnet.PSChildName
-    $dotnetver.Version = $dotnet.Version
-    $dotnetver.Release = $dotnet.Release
-    $Global:NetVersion += $dotnetver}
+    $DotNetVersion = Get-ChildItem 'HKLM:\SOFTWARE\Microsoft\NET Framework Setup\NDP' -Recurse | Get-ItemProperty -Name Version, Release -ErrorAction 0 | Where-Object { $_.PSChildName -match '^(?!S)\p{L}' } | select PSChildName, Version, Release
+    foreach ($dotnet in $DotNetVersion) {
+        $dotnetver = New-Object PsObject
+        $dotnetver | Add-Member -MemberType NoteProperty -Name NDPver -Value ''
+        $dotnetver | Add-Member -MemberType NoteProperty -Name Version -Value ''
+        $dotnetver | Add-Member -MemberType NoteProperty -Name Release -Value ''
+        $dotnetver.NDPver = $dotnet.PSChildName
+        $dotnetver.Version = $dotnet.Version
+        $dotnetver.Release = $dotnet.Release
+        $Global:NetVersion += $dotnetver
+    }
 
-$hotfix = get-hotfix
-foreach ($fix in $hotfix) {
-    $fixinfo = New-Object PsObject
-    $fixinfo | Add-Member -MemberType NoteProperty -Name Description -Value ''
-    $fixinfo | Add-Member -MemberType NoteProperty -Name InstalledOn -Value ''
-    $fixinfo | Add-Member -MemberType NoteProperty -Name HotFixID -Value ''
-    $fixinfo.Description = $fix.Description
-    $fixinfo.InstalledOn = $fix.InstalledOn
-    $fixinfo.HotFixID = $fix.HotFixID
-    $Global:WinHotFix += $fixinfo    }
+    $hotfix = get-hotfix
+    foreach ($fix in $hotfix) {
+        $fixinfo = New-Object PsObject
+        $fixinfo | Add-Member -MemberType NoteProperty -Name Description -Value ''
+        $fixinfo | Add-Member -MemberType NoteProperty -Name InstalledOn -Value ''
+        $fixinfo | Add-Member -MemberType NoteProperty -Name HotFixID -Value ''
+        $fixinfo.Description = $fix.Description
+        $fixinfo.InstalledOn = $fix.InstalledOn
+        $fixinfo.HotFixID = $fix.HotFixID
+        $Global:WinHotFix += $fixinfo    
+    }
 
     $OsVer | Add-Member -MemberType NoteProperty -Name ComputerName -Value ''
     $OsVer | Add-Member -MemberType NoteProperty -Name OsVersion -Value ''
@@ -483,19 +483,60 @@ foreach ($fix in $hotfix) {
     $OsVer.Edition = (Get-WindowsEdition -Online).Edition
 }
 
-Function GetOsFeatures{ 
- $Global:OsFeatures = @()
+Function GetOsFeatures { 
+    $Global:OsFeatures = @()
     $WindowsFeatures = Get-WindowsFeature -ErrorAction:SilentlyContinue -ErrorVariable +ErrorMessages | Where-Object Installed
-foreach ($feature in $WindowsFeatures) {
-    $fetureInfo = New-Object PsObject
-    $fetureInfo | Add-Member -MemberType NoteProperty -Name Name -Value ''
-    $fetureInfo | Add-Member -MemberType NoteProperty -Name FeatureType -Value ''
-    $fetureInfo | Add-Member -MemberType NoteProperty -Name Depth -Value ''
-    $fetureInfo.Name = $feature.Name
-    $fetureInfo.FeatureType = $feature.FeatureType
-    $fetureInfo.Depth = $feature.Depth
-    $Global:OsFeatures += $fetureInfo}
+    foreach ($feature in $WindowsFeatures) {
+        $fetureInfo = New-Object PsObject
+        $fetureInfo | Add-Member -MemberType NoteProperty -Name Name -Value ''
+        $fetureInfo | Add-Member -MemberType NoteProperty -Name FeatureType -Value ''
+        $fetureInfo | Add-Member -MemberType NoteProperty -Name Depth -Value ''
+        $fetureInfo.Name = $feature.Name
+        $fetureInfo.FeatureType = $feature.FeatureType
+        $fetureInfo.Depth = $feature.Depth
+        $Global:OsFeatures += $fetureInfo
+    }
  
 
 }
 
+Function Get-IISDefaultPermissions {
+    $Global:PermissionList = New-Object -TypeName 'System.Collections.ArrayList'
+    $PermissionList.Add("C:\inetpub\")
+    $PermissionList.Add("C:\inetpub\AdminScripts\")
+    $PermissionList.Add("C:\inetpub\AdminScripts\0409\")
+    $PermissionList.Add("C:\inetpub\custerr\")
+    $PermissionList.Add("C:\inetpub\custerr\en-us\")
+    $PermissionList.Add("C:\inetpub\ftproot\")
+    $PermissionList.Add("C:\inetpub\history\")
+    $PermissionList.Add("C:\inetpub\logs\")
+    $PermissionList.Add("C:\inetpub\logs\FailedReqLogFiles\")
+    $PermissionList.Add("C:\inetpub\logs\wmsvc\")
+    $PermissionList.Add("C:\inetpub\temp\")
+    $PermissionList.Add("C:\inetpub\temp\appPools\")
+    # $PermissionList.Add("C:\inetpub\temp\ASP Compiled Templates\")
+    # $PermissionList.Add("C:\inetpub\temp\IIS Temporary Compressed Files\")
+    $PermissionList.Add("c:\programdata\Microsoft\Crypto\RSA\MachineKeys\")
+    $PermissionList.Add("C:\inetpub\wwwroot\")
+    $PermissionList.Add("C:\inetpub\wwwroot\aspnet_client\")
+    $PermissionList.Add("$env:WINDIR\system32\inetsrv\")
+    $PermissionList.Add("$env:WINDIR\System32\inetsrv\0409\")
+    $PermissionList.Add("$env:WINDIR\System32\inetsrv\config\")
+    $PermissionList.Add("$env:WINDIR\System32\inetsrv\config\Export\")
+    $PermissionList.Add("$env:WINDIR\System32\inetsrv\config\schema\")
+    $PermissionList.Add("$env:WINDIR\System32\inetsrv\en-us\")
+    $PermissionList.Add("$env:WINDIR\System32\inetsrv\History\")
+    $PermissionList.Add("$env:WINDIR\System32\inetsrv\MetaBack\")
+    $PermissionList.Add("HKLM:\Software\Microsoft\Inetmgr\")
+    $PermissionList.Add("HKLM:\Software\Microsoft\InetStp\")
+    $PermissionList.Add("HKLM:\Software\Microsoft\W3SVC\")
+    $PermissionList.Add("HKLM:\System\CurrentControlSet\Services\ASP\")
+    $PermissionList.Add("HKLM:\System\CurrentControlSet\Services\ASP.NET\")
+    $PermissionList.Add("HKLM:\System\CurrentControlSet\Services\ASP.NET_2.0.50727\")
+    $PermissionList.Add("HKLM:\System\CurrentControlSet\Services\aspnet_state\")
+    $PermissionList.Add("HKLM:\System\CurrentControlSet\Services\HTTP\")
+    $PermissionList.Add("HKLM:\System\CurrentControlSet\Services\IISAdmin\")
+    $PermissionList.Add("HKLM:\System\CurrentControlSet\Services\W3SVC\")
+    $PermissionList.Add("HKLM:\System\CurrentControlSet\Services\WAS\")
+    $PermissionList.Add("HKLM:\System\CurrentControlSet\Services\WMsvc\")
+}
