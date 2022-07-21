@@ -107,6 +107,7 @@ LOGcatcher<Date of collection>.zip
 
 * <a class="github-button" href="https://github.com/cristian-clamsen" data-icon="octicon-cloud-download" aria-label="Download ntkme/github-buttons on GitHub">Cristian Negulescu</a> 
 * <a class="github-button" href="https://github.com/rogheorg" data-icon="octicon-cloud-download" aria-label="Download ntkme/github-buttons on GitHub">Roxana Gheorghe</a> 
+* * <a class="github-button" href="https://github.com/nt-7" data-icon="octicon-cloud-download" aria-label="Download ntkme/github-buttons on GitHub">Naito Oshima</a> 
 ### Please create a PR for any question or feature requests/changes .	
 
 
