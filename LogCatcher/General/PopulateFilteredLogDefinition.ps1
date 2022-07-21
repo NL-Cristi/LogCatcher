@@ -204,6 +204,36 @@ Function PopulateFilteredLogDefinition {
     $LogDef += $LogDefQuery
 
     #endregion
+    
+    
+    #region GetIISConfigHistory
+    #region LogDefQuery
+    $LogDefQuery = New-Object PsObject
+    $LogDefQuery | Add-Member -MemberType NoteProperty -Name ComputerName -Value ''
+    $LogDefQuery | Add-Member -MemberType NoteProperty -Name LogName -Value ''
+    $LogDefQuery | Add-Member -MemberType NoteProperty -Name Product -Value ''
+    $LogDefQuery | Add-Member -MemberType NoteProperty -Name Location -Value ''
+    $LogDefQuery | Add-Member -MemberType NoteProperty -Name TypeInfo -Value ''
+    $LogDefQuery | Add-Member -MemberType NoteProperty -Name Level -Value ''
+    $LogDefQuery | Add-Member -MemberType NoteProperty -Name SiteID -Value ''
+    $LogDefQuery | Add-Member -MemberType NoteProperty -Name ParentSite -Value ''
+    $LogDefQuery | Add-Member -MemberType NoteProperty -Name PoolName -Value ''
+
+    #endregion
+
+
+    $LogDefQuery.ComputerName = $env:COMPUTERNAME
+    $LogDefQuery.Level = "Server"
+    $LogDefQuery.Location = "C:\inetpub\history"
+    $LogDefQuery.LogName = "IISConfigHistory"
+    $LogDefQuery.Product = "IIS"
+    $LogDefQuery.TypeInfo = "Folder"
+
+    $LogDef += $LogDefQuery
+
+    #endregion
+
+
     #region PopulateEvtx
 
     foreach ($iiseventLog in $IISEventLogs) {

@@ -16,6 +16,9 @@ LOGcatcher<Date of collection>.zip
     │       │     ├── applicationHost.config
     │ 	    │     │  
     │       │     └── redirection.config
+    │       ├── IISHistoryConfig
+    │       │     └── CFGHISTORY_*\*
+    │	    │
     │       ├── NETFramework
     │       │     ├── assembly\*\*.config
     │       │     ├── Framework\*\*.config

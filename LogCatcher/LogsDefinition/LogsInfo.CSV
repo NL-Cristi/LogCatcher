@@ -3,6 +3,7 @@
 "X-2019-IIS2","Default Web Site","IISLogs","C:\inetpub\logs\LogFiles\W3SVC1","Folder","Site","1","Default Web Site",""
 "X-2019-IIS2","IISConfig","IIS","C:\Windows\system32\inetsrv\config","Folder","Server","","",""
 "X-2019-IIS2","HTTPERRLog","IIS","C:\Windows\System32\LogFiles\HTTPERR","Folder","Server","","",""
+"X-2019-IIS2","IISConfigHistory","IIS","C:\inetpub\history","Folder","Server","","",""
 "X-2019-IIS2","Application","OS","C:\Windows\System32\Winevt\Logs\Application.evtx","evtx","Server","","",
 "X-2019-IIS2","Security","OS","C:\Windows\System32\Winevt\Logs\Security.evtx","evtx","Server","","",
 "X-2019-IIS2","System","OS","C:\Windows\System32\Winevt\Logs\System.evtx","evtx","Server","","",
