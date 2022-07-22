@@ -18,6 +18,9 @@
   Specifies the SiteIDs that you want to collect logs for. Format is comma seperated string. 
   By default SiteIDs is set for ALL sites hosted in IIS.
 
+  .PARAMETER ForceFREBCollection
+  Specifies if you want to collect FREBs even if they are not enabled
+  By default it is set to false (only collects FREBs if they are enabled on the site)
  
   .INPUTS
   None. You cannot pipe objects to Update-Month.ps1.
@@ -46,7 +49,8 @@ param (
   [bool] $Quiet,
   [String] $ZipLocation,
   [int32] $LogAge,
-  [String] $SiteIds
+  [String] $SiteIds,
+  [bool] $ForceFREBCollection
 )
 $Global:scriptPath = split-path -parent $MyInvocation.MyCommand.Definition
 If (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
@@ -57,6 +61,10 @@ If (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
 # Now running elevated so launch the script:
 
 . $scriptPath\General\Defaults.ps1
+
+if ($ForceFREBCollection -eq $true){
+  $Global:ForceFREBCollection = $true
+}
 
 switch ($Quiet) {
   $true {
