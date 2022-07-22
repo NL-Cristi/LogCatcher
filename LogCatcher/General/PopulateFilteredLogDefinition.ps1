@@ -132,7 +132,7 @@ Function PopulateFilteredLogDefinition {
         $LogDefQuery | Add-Member -MemberType NoteProperty -Name PoolName -Value ''
 
         #endregion
-        if ($siteinfo.traceFailedRequestsLogging.enabled -eq "True") {
+        if ($Global:ForceFREBCollection -eq $true -or $siteinfo.traceFailedRequestsLogging.enabled -eq "True") {
             $LogDefQuery.ComputerName = $env:COMPUTERNAME
             $LogDefQuery.Level = "Site"
             $LogDefQuery.Location = $siteinfo.traceFailedRequestsLogging.directory + "\W3SVC" + $siteinfo.id -replace "%SystemDrive%", "$env:SystemDrive"
