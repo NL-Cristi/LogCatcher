@@ -484,8 +484,11 @@ Function GetOsInfo {
 }
 
 Function GetOsFeatures { 
+    #If Server proceed if not dont run
+    if (((get-itemproperty -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion" -Name ProductName).ProductName).Contains("Server") -eq "True")
+   {
     $Global:OsFeatures = @()
-    $WindowsFeatures = Get-WindowsFeature -ErrorAction:SilentlyContinue -ErrorVariable +ErrorMessages | Where-Object Installed
+    $WindowsFeatures = Get-WindowsFeature -ErrorAction silentlycontinue -ErrorVariable +ErrorMessages | Out-Null | Where-Object Installed
     foreach ($feature in $WindowsFeatures) {
         $fetureInfo = New-Object PsObject
         $fetureInfo | Add-Member -MemberType NoteProperty -Name Name -Value ''
@@ -496,7 +499,7 @@ Function GetOsFeatures {
         $fetureInfo.Depth = $feature.Depth
         $Global:OsFeatures += $fetureInfo
     }
- 
+}
 
 }
 

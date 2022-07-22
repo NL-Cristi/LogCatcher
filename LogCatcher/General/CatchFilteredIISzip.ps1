@@ -86,7 +86,7 @@ function CatchFilteredIISzip {
     foreach ($key in $Global:PermissionList) {
         $groupSeparator | Out-File -FilePath $permissionLog	-Append -Force
         "Default NTFS file system permissions for: " + $key | Out-File -FilePath $permissionLog -Append -Force
-        (Get-Acl -Path $key).Access | Format-Table IdentityReference, FileSystemRights, IsInherited, AccessControlType  -AutoSize | Out-File -FilePath $permissionLog -Append -Force
+        (Get-Acl -Path $key -ErrorAction silentlycontinue -ErrorVariable +ErrorMessages).Access | Format-Table IdentityReference, FileSystemRights, IsInherited, AccessControlType  -AutoSize | Out-File -FilePath $permissionLog -Append -Force
     }
 
     #segmetn to get NETSH HTTP Config
