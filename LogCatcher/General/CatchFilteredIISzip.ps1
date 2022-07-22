@@ -43,6 +43,10 @@ function CatchFilteredIISzip {
                     $httperr = $GeneralTempLocation + "\HttpERR"
                     Robocopy.exe $FilteredLogDefinition.Location $httperr /s /maxage:$MaxDays | Out-Null
                 }
+                elseif ( $FilteredLogDefinition.LogName -eq "IISConfigHistory" ) {
+                    $IISConfigHistory = $GeneralTempLocation + "\IISConfigHistory"
+                    Robocopy.exe $FilteredLogDefinition.Location $IISConfigHistory /s | Out-Null
+                }
                 elseif ( $FilteredLogDefinition.LogName -eq "IISConfig" ) {
                     $IISConfig = $GeneralTempLocation + "\IISConfig"
                     Robocopy.exe $FilteredLogDefinition.Location $IISConfig *.config /s | Out-Null
