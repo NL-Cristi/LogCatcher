@@ -224,7 +224,7 @@ Function PopulateFilteredLogDefinition {
 
     $LogDefQuery.ComputerName = $env:COMPUTERNAME
     $LogDefQuery.Level = "Server"
-    $LogDefQuery.Location = "C:\inetpub\history"
+    $LogDefQuery.Location = (Get-WebConfigurationProperty -pspath 'MACHINE/WEBROOT/APPHOST'  -filter "system.applicationHost/configHistory" -name "path").Value -replace "%SystemDrive%", "$env:SystemDrive"
     $LogDefQuery.LogName = "IISConfigHistory"
     $LogDefQuery.Product = "IIS"
     $LogDefQuery.TypeInfo = "Folder"
