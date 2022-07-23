@@ -26,7 +26,7 @@ The tool collects logs that Microsoft Support Engineers use in order to diagnose
 
 
 
-This tool is developed by  [__IIS Support Engineers__](https://github.com/crnegule/LogCatcher/blob/master/README.md#authors) so it is ready to collect logs for issues we regularly encounter.
+This tool is developed by __IIS Support Engineers__ so it is ready to collect logs for issues we regularly encounter.
 
 We would send this tool to you, generally as part of a support case, and gather data to help you diagnose your issue.  
 
@@ -61,6 +61,9 @@ LOGcatcher<Date of collection>.zip
     │       │     ├── applicationHost.config
     │       │     └── redirection.config
     │       │
+    │       ├── IISHistoryConfig
+    │       │     └── CFGHISTORY_*\*
+    │       │
     │       ├── NETFramework
     │       │     ├── assembly\*\*.config
     │       │     ├── Framework\*\*.config
@@ -76,17 +79,19 @@ LOGcatcher<Date of collection>.zip
     │       │
     │       ├── Application.evtx
     │       ├── Cap2.evtx
+    │       ├── IIS.log
+    │       ├── IISDefaultPermissions.txt
     │       ├── Security.evtx
     │       ├── Setup.evtx
     │       ├── SitesOverview.csv
     │       ├── SrvInfo.txt
-    │       ├── System.evtx
+    │       ├── System.evtx    
     │       └── ToolLog.log
     │
     └─── Sites
             ├── bin
             │    └── *.config
-	    │
+	        │
             ├── FrebLogs
             │    ├── u_ex*.log
             │    └── freb.xsl
@@ -94,7 +99,7 @@ LOGcatcher<Date of collection>.zip
             ├── IISLogs
             │    └── u_ex*.log
             ├── web.config
-	    │
+            │
             └── *.config
 
 
@@ -102,15 +107,8 @@ LOGcatcher<Date of collection>.zip
 
  #
 
-
-## Authors
-
-* <a class="github-button" href="https://github.com/cristian-clamsen" data-icon="octicon-cloud-download" aria-label="Download ntkme/github-buttons on GitHub">Cristian Negulescu</a> 
-* <a class="github-button" href="https://github.com/rogheorg" data-icon="octicon-cloud-download" aria-label="Download ntkme/github-buttons on GitHub">Roxana Gheorghe</a> 
-* * <a class="github-button" href="https://github.com/nt-7" data-icon="octicon-cloud-download" aria-label="Download ntkme/github-buttons on GitHub">Naito Oshima</a> 
-### Please create a PR for any question or feature requests/changes .	
+## Please create a [PR](https://github.com/cristian-clamsen/LogCatcher/pulls) or an [ISSUE](https://github.com/cristian-clamsen/LogCatcher/issues) for any question or feature requests/changes .	
 
 
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+#
+### License : This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
